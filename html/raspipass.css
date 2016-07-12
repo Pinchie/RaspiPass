@@ -1,0 +1,76 @@
+body {
+	background-color: #031634;
+	font-family: Helvetica;
+}
+
+table {
+	border: 0px black;
+	padding: 5px;
+	width: 800px;
+}
+
+td {
+	padding: 5px;
+}
+
+tr:nth-child(odd) {background-color: #93A6E4}
+tr:nth-child(even) {background-color: #8396D4}
+
+th {
+	background-color: #998FBB;
+	color: #0000000;
+	font-variant: small-caps;
+	font-family: Garamond;
+	font-size:25;
+	padding: 5px;
+}
+
+h1 {
+	text-align: center;	
+	color: #343838;
+}
+
+input[type="radio"], select, dropdown-content, input[type="text"], textarea, input[type="number"] { 
+	background-color: #A8BAF9;
+}
+
+input[type="number"] {
+	width: 50px;
+}
+
+input[type=submit] {
+    padding: 5px 15px; 
+    background: #C9BFEB; 
+    border: 1;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    font-weight: bold;
+}
+
+textarea {
+	width: 770px;
+}
+
+.wrapword{
+white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+white-space: -pre-wrap;      /* Opera 4-6 */
+white-space: -o-pre-wrap;    /* Opera 7 */
+white-space: pre-wrap;       /* css-3 */
+word-wrap: break-word;       /* Internet Explorer 5.5+ */
+white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+word-break: break-all;
+white-space: normal;
+
+}
+
+titlecell {
+        padding: 10px;
+        background-color: #FF5F6B;
+}
+
+table.buttontable td {
+	text-align: center;
+	vertical-align: center;
+	margin: auto;
+	display: block;	
+}

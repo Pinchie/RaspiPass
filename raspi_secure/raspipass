@@ -1,0 +1,76 @@
+#!/bin/bash
+echo `date`
+echo "Starting RaspiPass..."
+
+if [ -n "$1" ]; then
+#	echo "Parameter $1 found - checking for integer"
+	if [ $1 -eq $1 ] 2> /dev/null; then
+#		echo "Integer parameter found"
+		if [ $1 -gt 0 ] && [ $1 -le 100 ]; then
+			echo "Running with manual probability of $1"
+			probability=$1
+		else
+			echo "ERROR: Probabilty parameter is out of range. Using default of 20%"
+			probability=20
+		fi
+	else
+		echo "ERROR: Probability parameter is not an integer. Using default of 20%"
+		probability=20
+	fi
+else
+#	echo "No parameter found"
+# Check probability file
+	echo "Checking for probability file..."
+	if [ -f /raspipass/runchance.txt ]; then
+		echo "/raspipass/runchance.txt found. Reading probability."
+		if [ "`grep $'\x60' /raspipass/runchance.txt`" ]; then
+			echo "Source file contains illegal character(s). Aborting sourcing."
+			echo "Using default probability of 20."
+			probability=20
+		else
+			source /raspipass/runchance.txt
+#			echo "Probability is $probability"
+			if [ -z $probability ]; then
+				echo "File read. Probability not set. Using default of 20."
+				probability=20
+			else
+				if [ $probability -eq $probability ] 2> /dev/null; then
+					echo "Probability manually set at $probability"
+				else
+					echo "ERROR: Probability is not an integer. Using default of 20."
+					probability=20
+				fi
+				if [ $probability -lt 0 ] || [ $probability -gt 100 ]; then
+					echo "ERROR: Probability is out of range. Using default of 20."
+					probability=20
+				fi
+			fi
+		fi
+	else
+		echo "/raspipass/runchance.txt not found. Using default probability of 20."
+		probability=20
+	fi
+fi
+# Run probability calculation
+echo "Running random check with $probability% chance..."
+raspiroll=`shuf -i 1-100 -n 1`
+if [ $raspiroll -le $probability ]; then
+#	echo "$raspiroll <= $probability... bringing up AP."
+	echo "Random check passed - bringing up AP."
+	echo "Closing any existing hostapd processes..."
+	killall hostapd 2> /dev/null
+	exitstat=$?
+	if [ $exitstat -eq 0 ]; then
+		echo "hostapd successfully terminated."
+	fi
+	ifconfig wlan0 down
+	ifdown wlan0
+	/usr/bin/macchanger -m `rl -c 1 /raspipass/mac_addresses.txt` wlan0
+	ifup wlan0
+	echo "Bringing up access point..."
+	bash -c "/usr/sbin/hostapd -t /raspipass/hostapd.conf" >> /var/log/hostapd &
+	echo killall hostapd | at now + 5 minutes > /dev/null
+else
+#	echo "$raspiroll > $probability - not continuing."
+	echo "Random check did not pass - not bringing up AP."
+fi

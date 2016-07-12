@@ -1,0 +1,5 @@
+# RaspiPass probability file
+# This determines the chance of the access point being
+# raisd when the script runs.
+# This is best edited via the web configuration.
+probability=20
