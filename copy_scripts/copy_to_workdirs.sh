@@ -12,7 +12,7 @@ sudo chmod 664 /raspipass/mac_addresses.txt
 sudo chmod 664 /raspipass/mac_restrict.txt
 sudo chmod 664 /raspipass/runchance.txt
 sudo chmod 755 /raspipass/log
-sudo chmod 664 /raspipass/log/hostapd
+sudo chmod 666 /raspipass/log/hostapd
 
 # /raspi_secure
 sudo cp -rfv ../raspi_secure/ /

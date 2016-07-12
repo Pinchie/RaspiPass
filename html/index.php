@@ -216,8 +216,8 @@
         echo '<table align="center">' . "\n";
         echo '<tr><th colspan="2">Log Viewer</th></tr>';
 
-/* Print /var/log/hostapd */
-        echo '<tr><td>/var/log/hostapd</td></tr>';
+/* Print /raspipass/log/hostapd */
+        echo '<tr><td>/raspipass/log/hostapd</td></tr>';
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="hostapd_log" cols="80" rows="15" readonly="readonly">' . "\n";

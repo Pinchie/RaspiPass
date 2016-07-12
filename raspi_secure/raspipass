@@ -65,7 +65,9 @@ if [ $raspiroll -le $probability ]; then
 	fi
 	ifconfig wlan0 down
 	ifdown wlan0
-	/usr/bin/macchanger -m `rl -c 1 /raspipass/mac_addresses.txt` wlan0
+	new_mac=`rl -c 1 /raspipass/mac_addresses.txt`
+	echo Changing MAC address to $new_mac
+	/usr/bin/macchanger -m $new_mac wlan0 > /dev/null
 	ifup wlan0
 	echo "Bringing up access point..."
 	bash -c "/usr/sbin/hostapd -t /raspipass/hostapd.conf" >> /var/log/hostapd &
