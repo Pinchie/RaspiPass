@@ -33,7 +33,7 @@ then
 	sudo chown -R root:root /raspi_secure
 	sudo chmod 700 /raspi_secure/set_defaults.sh
 	sudo chmod 644 /raspi_secure/firewall.rules
-	sudo chmod 644 /raspi_secure/iptables.txt
+	sudo chmod 644 /raspi_secure/iptables.sh
 	sudo chmod 755 /raspi_secure/raspipass
 	echo Done.
 	echo
