@@ -29,7 +29,7 @@ then
 	# /raspi_secure
 	echo Copying /git/raspi_secure...
 	sudo rsync -ryW --del --force /git/raspi_secure /
-	echo Setting permissions..
+	echo Setting permissions...
 	sudo chown -R root:root /raspi_secure
 	sudo chmod 644 /raspi_secure/firewall.rules
 	sudo chmod 744 /raspi_secure/iptables.sh
