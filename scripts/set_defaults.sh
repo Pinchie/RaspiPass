@@ -2,16 +2,18 @@
 # Script to clear log files - particularly Apache ones - and set
 # certain files to their default configuration.
 #
+# Designed to be run before distribution
+#
 # To be run as root
 
 echo Clearing logs
 echo dmesg...
-dmesg -C
+sudo dmesg -C
 echo Apache2...
-echo "" > /var/log/apache2/error.log
-echo "" > /var/log/apache2/access.log
-echo "" > /var/log/apache2/other_vhosts_access.log
-rm /var/log/apache2/*.log.* 2> /dev/null
+echo "" | sudo tee /var/log/apache2/error.log > /dev/null
+echo "" | sudo tee /var/log/apache2/access.log > /dev/null
+echo "" | sudo tee /var/log/apache2/other_vhosts_access.log > /dev/null
+sudo rm /var/log/apache2/*.log.* 2> /dev/null
 echo hostapd...
 echo "" > /raspipass/log/hostapd
 echo Done.

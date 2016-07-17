@@ -20,6 +20,9 @@ iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
 iptables -A INPUT -m physdev --physdev-in eth0 -p tcp --dport 80 -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
 
+# Allow the device to make outgoing HTTP requests
+iptables -A OUTPUT -s 0/0 -p tcp --dport 80 -j ACCEPT
+
 # Allow DNS
 iptables -A INPUT -p udp --sport 53 -j ACCEPT
 iptables -A INPUT -p udp --dport 53 -j ACCEPT
@@ -57,7 +60,7 @@ iptables -A FORWARD  -p tcp -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD  -p udp -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Allow connection to GitHub servers
-iptables -A INPUT -s 192.30.252.0/22 -j ACCEPT
+iptables -A INPUT -m physdev --physdev-in eth0 -s 192.30.252.0/22 -j ACCEPT
 iptables -A OUTPUT -d 192.30.252.0/22 -j ACCEPT
 
 # Allow multicasts
@@ -155,7 +158,7 @@ iptables -A OUTPUT -j LOGGING
 iptables -A FORWARD -j LOGGING
 
 # Set logging options - non-WLAN disabled due to oversize logs. Uncomment to log dropped packet info.
-# iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
+#iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
 iptables -A WLAN_LOGGING -m limit --limit 10/min -j LOG --log-prefix "Dropped incoming packet on wlan0: " --log-level 4
 
 # Drop 'em
