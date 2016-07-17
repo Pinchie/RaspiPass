@@ -4,7 +4,6 @@
 	Can the wifi region then be inferred?
 -Reset to defaults option on configuration tab - use US as default?
 -Track previously-used MAC addresses to prevent chance of repeating the same AP within Nintendo's time limit 
--Whitelist Raspbian repositories for apt-get 
 -apt-get upgrade method from web frontend?
 -Installation script to set up users & directories
 	This will allow downloading of git repo and installation without having to download RaspiPass image
