@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Clear system logs to clear disk space
 

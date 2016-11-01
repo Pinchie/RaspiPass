@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # Used to copy files from system directories to git working directories
 
 echo "This will copy all files from the RaspiPass system directories to the /git working directories."

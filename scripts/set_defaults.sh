@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # Script to clear log files - particularly Apache ones - and set
 # certain files to their default configuration.
 #

@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Copy files from git directory to system directories and set 
 # permissions 
@@ -6,7 +6,7 @@
 echo "This will copy all files from the /git working directories to the RaspiPass system directories."
 echo "Proceeding will cause all matching files in the RaspiPass system directories to be overwritten."
 echo "Non-matching files in the RaspiPass system directories will be deleted!"
-read -p "Are you sure you want to proceed? [Y/N] " -n 1 -r
+read -p "Are you sure you want to proceed? [Y/N] " -r -n 1
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
         echo

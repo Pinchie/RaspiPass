@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # Used for testing new iptables rules before exporting with iptables-save.
 #
 # To restore previously-saved rules, you are better off running:
@@ -18,7 +18,7 @@ iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
 
 # Allow HTTP 
 iptables -A INPUT -m physdev --physdev-in eth0 -p tcp --dport 80 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
+iptables -A OUTPUT -s 0/0 -p tcp --sport 80 -j ACCEPT
 
 # Allow the device to make outgoing HTTP requests
 iptables -A OUTPUT -s 0/0 -p tcp --dport 80 -j ACCEPT
@@ -70,82 +70,33 @@ iptables -A FORWARD -d 224.0.0.0 -p tcp -j ACCEPT
 iptables -A FORWARD -s 224.0.0.0 -p tcp -j ACCEPT
 
 # Streetpass relay whitelist	
-iptables -A INPUT -s 103.246.150.249 -j ACCEPT
-iptables -A OUTPUT -d 103.246.150.249 -j ACCEPT
-iptables -A INPUT -s 111.168.21.83 -j ACCEPT
-iptables -A OUTPUT -d 111.168.21.83 -j ACCEPT
-iptables -A INPUT -s 192.195.204.139 -j ACCEPT
-iptables -A OUTPUT -d 192.195.204.139 -j ACCEPT
-iptables -A INPUT -s 202.32.117.142 -j ACCEPT
-iptables -A OUTPUT -d 202.32.117.142 -j ACCEPT
-iptables -A INPUT -s 202.32.117.143 -j ACCEPT
-iptables -A OUTPUT -d 202.32.117.143 -j ACCEPT
-iptables -A INPUT -s 202.32.117.172 -j ACCEPT
-iptables -A OUTPUT -d 202.32.117.172 -j ACCEPT
-iptables -A INPUT -s 23.66.85.79 -j ACCEPT
-iptables -A OUTPUT -d 23.66.85.79 -j ACCEPT
-iptables -A INPUT -s 23.66.98.90 -j ACCEPT
-iptables -A OUTPUT -d 23.66.98.90 -j ACCEPT
-iptables -A INPUT -s 54.244.22.201 -j ACCEPT
-iptables -A OUTPUT -d 54.244.22.201 -j ACCEPT
-iptables -A INPUT -s 69.25.139.140 -j ACCEPT
-iptables -A OUTPUT -d 69.25.139.140 -j ACCEPT
-iptables -A INPUT -s 69.25.139.140 -j ACCEPT
-iptables -A OUTPUT -d 69.25.139.140 -j ACCEPT
-iptables -A INPUT -s 69.25.139.162 -j ACCEPT
-iptables -A OUTPUT -d 69.25.139.162 -j ACCEPT
-iptables -A INPUT -s 69.25.139.164 -j ACCEPT
-iptables -A OUTPUT -d 69.25.139.164 -j ACCEPT
-iptables -A INPUT -s 69.25.139.169 -j ACCEPT
-iptables -A OUTPUT -d 69.25.139.169 -j ACCEPT
-iptables -A INPUT -s 52.88.120.190 -j ACCEPT
-iptables -A OUTPUT -d 52.88.120.190 -j ACCEPT
-iptables -A INPUT -s 52.24.79.99 -j ACCEPT
-iptables -A OUTPUT -d 52.24.79.99 -j ACCEPT
 iptables -A INPUT -s 23.7.24.35 -j ACCEPT
 iptables -A OUTPUT -d 23.7.24.35 -j ACCEPT
+iptables -A FORWARD -s 23.7.24.35 -j ACCEPT
+iptables -A INPUT -s 52.11.210.152 -j ACCEPT
+iptables -A OUTPUT -d 52.11.210.152 -j ACCEPT
+iptables -A FORWARD -s 52.11.210.152 -j ACCEPT
+iptables -A INPUT -s 52.25.179.65 -j ACCEPT
+iptables -A OUTPUT -d 52.25.179.65 -j ACCEPT
+iptables -A FORWARD -s 52.25.179.65 -j ACCEPT
+iptables -A INPUT -s 52.89.56.205 -j ACCEPT
+iptables -A OUTPUT -d 52.89.56.205 -j ACCEPT
+iptables -A FORWARD -s 52.89.56.205 -j ACCEPT
+iptables -A INPUT -s 54.148.137.96 -j ACCEPT
+iptables -A OUTPUT -d 54.148.137.96 -j ACCEPT
+iptables -A FORWARD -s 54.148.137.96 -j ACCEPT
 iptables -A INPUT -s 54.218.98.74 -j ACCEPT
 iptables -A OUTPUT -d 54.218.98.74 -j ACCEPT
-iptables -A FORWARD -s 103.246.150.249 -j ACCEPT
-iptables -A FORWARD -d 103.246.150.249 -j ACCEPT
-iptables -A FORWARD -s 111.168.21.83 -j ACCEPT
-iptables -A FORWARD -d 111.168.21.83 -j ACCEPT
-iptables -A FORWARD -s 192.195.204.139 -j ACCEPT
-iptables -A FORWARD -d 192.195.204.139 -j ACCEPT
-iptables -A FORWARD -s 202.32.117.142 -j ACCEPT
-iptables -A FORWARD -d 202.32.117.142 -j ACCEPT
-iptables -A FORWARD -s 202.32.117.143 -j ACCEPT
-iptables -A FORWARD -d 202.32.117.143 -j ACCEPT
-iptables -A FORWARD -s 202.32.117.172 -j ACCEPT
-iptables -A FORWARD -d 202.32.117.172 -j ACCEPT
-iptables -A FORWARD -s 23.66.85.79 -j ACCEPT
-iptables -A FORWARD -d 23.66.85.79 -j ACCEPT
-iptables -A FORWARD -s 23.66.98.90 -j ACCEPT
-iptables -A FORWARD -d 23.66.98.90 -j ACCEPT
-iptables -A FORWARD -s 54.244.22.201 -j ACCEPT
-iptables -A FORWARD -d 54.244.22.201 -j ACCEPT
-iptables -A FORWARD -s 69.25.139.140 -j ACCEPT
-iptables -A FORWARD -d 69.25.139.140 -j ACCEPT
-iptables -A FORWARD -s 69.25.139.140 -j ACCEPT
-iptables -A FORWARD -d 69.25.139.140 -j ACCEPT
-iptables -A FORWARD -s 69.25.139.162 -j ACCEPT
-iptables -A FORWARD -d 69.25.139.162 -j ACCEPT
-iptables -A FORWARD -s 69.25.139.164 -j ACCEPT
-iptables -A FORWARD -d 69.25.139.164 -j ACCEPT
-iptables -A FORWARD -s 69.25.139.169 -j ACCEPT
-iptables -A FORWARD -d 69.25.139.169 -j ACCEPT
-iptables -A FORWARD -s 52.88.120.190 -j ACCEPT
-iptables -A FORWARD -d 52.88.120.190 -j ACCEPT
-iptables -A FORWARD -s 52.24.79.99 -j ACCEPT
-iptables -A FORWARD -d 52.24.79.99 -j ACCEPT
-iptables -A FORWARD -s 23.7.24.35 -j ACCEPT
-iptables -A FORWARD -d 23.7.24.35 -j ACCEPT
 iptables -A FORWARD -s 54.218.98.74 -j ACCEPT
-iptables -A FORWARD -d 54.218.98.74 -j ACCEPT
-iptables -A INPUT -s 52.27.236.3 -j ACCEPT
-iptables -A OUTPUT -d 52.27.236.3 -j ACCEPT
-iptables -A FORWARD -s 52.27.236.3 -j ACCEPT
-iptables -A FORWARD -d 52.27.236.3 -j ACCEPT
+iptables -A INPUT -s 54.218.99.79 -j ACCEPT
+iptables -A OUTPUT -d 54.218.99.79 -j ACCEPT
+iptables -A FORWARD -s 54.218.99.79 -j ACCEPT
+iptables -A INPUT -s 54.244.22.201 -j ACCEPT
+iptables -A OUTPUT -d 54.244.22.201 -j ACCEPT
+iptables -A FORWARD -s 54.244.22.201 -j ACCEPT
+iptables -A INPUT -s 69.25.139.140 -j ACCEPT
+iptables -A OUTPUT -d 69.25.139.140 -j ACCEPT
+iptables -A FORWARD -s 69.25.139.140 -j ACCEPT
 
 # Set up log for non-matching patckets
 iptables -N LOGGING
@@ -159,7 +110,7 @@ iptables -A FORWARD -j LOGGING
 
 # Set logging options - non-WLAN disabled due to oversize logs. Uncomment to log dropped packet info.
 #iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
-iptables -A WLAN_LOGGING -m limit --limit 10/min -j LOG --log-prefix "Dropped incoming packet on wlan0: " --log-level 4
+iptables -A WLAN_LOGGING -m limit --limit 10/min -j LOG --log-prefix "Dropped incoming wlan packet: " --log-level 4
 
 # Drop 'em
 iptables -A LOGGING -j DROP
