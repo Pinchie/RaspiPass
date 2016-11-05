@@ -7,7 +7,7 @@ echo "This will copy all files from the /git working directories to the RaspiPas
 echo "Proceeding will cause all matching files in the RaspiPass system directories to be overwritten."
 echo "Non-matching files in the RaspiPass system directories will be deleted!"
 read -p "Are you sure you want to proceed? [Y/N] " -r -n 1
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [ $REPLY =~ ^[Yy]$ ] || [ $1 = "auto" ]
 then
         echo
 	
