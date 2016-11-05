@@ -9,7 +9,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
 	echo	
 	echo Copying /raspipass...
-	sudo rsync -ryW --del --force /raspipass /git/
+	sudo rsync --exclude '/raspipass/log/update.log' -ryW --del --force /raspipass /git/
+	echo "" > ../raspipass/update.log
 	echo Copying /raspi_secure...
 	sudo rsync -ryW --del --force /raspi_secure /git/
 	echo Copying /var/www/html...
