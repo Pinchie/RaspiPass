@@ -275,7 +275,7 @@ if ($newversionavailable) {
 /* Update button */
         echo '<tr><td class="buttoncell">';
         echo '<form name="update" id="" method="post" action="update.php">' . "\n";
-        echo '<input type="submit" name="submit_button" id="submit_button" value="Update RaspiPbass" />' . "\n";
+        echo '<input type="submit" name="submit_button" id="submit_button" value="Update RaspiPass" />' . "\n";
         echo '</td>';
         echo '</form>' . "\n";
 
