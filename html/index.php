@@ -7,6 +7,11 @@
 </head>
 <body>
 <?php
+/* Read version file and latest version from URL, and compare */
+	$version=file("/raspipass/version");
+	$latestversion=file("https://raw.githubusercontent.com/Pinchie/RaspiPass/master/version");
+	$newversionavailable=version_compare($version[0],$latestversion[0]);
+
 /* Read config.ini */
         $config_array=parse_ini_file("/raspipass/config.ini");
 
@@ -15,7 +20,24 @@
 	echo '<tr>';
 	echo '<th colspan="2" style="background-color: #031634"><img src="logo.png" align="center">';
 	echo '</th>';
-	echo '</tr>';
+	echo '</tr>' . "\n";
+	echo '<tr style="background-color:transparent">' . "\n";
+	echo '<td align="center" style="color: grey" colspan="2">Version ';
+	echo $version[0];
+	echo '</td>';
+	echo '</tr>' . "\n";
+
+/* Notify of newer version */
+if ($newversionavailable==-1) {
+	echo '<tr style="background-color:transparent">' . "\n";
+	echo '<td align="center" style="color: red" colspan="2">New version available: ';
+	echo $latestversion[0];
+	echo '</td>' . "\n";
+	echo '</tr>' . "\n";
+}
+
+/* Close header table */
+
 	echo '</table>' . "\n";
 
 /* Create Tabs */
@@ -24,6 +46,9 @@
 	echo '<li><a href="#maclist">StreetPass MACs</a></li>' . "\n";
 	echo '<li><a href="#admin">Admin Tasks</a></li>' . "\n";
 	echo '<li><a href="#logs">Log Viewer</a></li>' . "\n";
+if ($newversionavailable==-1) {
+	echo '<li><a href="#update" style="color:darkred">Update</a></li>' . "\n";
+}
 	echo '</ul>' . "\n";
 
 /* Start Configuration Tab */
@@ -188,19 +213,19 @@
 	/* Start AP */
 	echo '<tr><td class="buttoncell">';
 	echo '<form name="start_ap" id="" method="post" action="start_ap.php">' . "\n";
-	echo '<input type="submit" name=submit_button" id="submit_button" value="Start Access Point" />' . "\n";
+	echo '<input type="submit" name="submit_button" id="submit_button" value="Start Access Point" />' . "\n";
 	echo '</td>';
 	echo '</form>' . "\n";
 	/* Reboot device */
         echo '<td class="buttoncell">';
         echo '<form name="reboot_device" id="" method="post" action="reboot.php">' . "\n";
-        echo '<input type="submit" name=submit_button" id="submit_button" value="Reboot device" />' . "\n";
+        echo '<input type="submit" name="submit_button" id="submit_button" value="Reboot device" />' . "\n";
         echo '</td>';
 	echo '</form>' . "\n";
 	/* Shut down device */
         echo '<td class="buttoncell">';
         echo '<form name="shutdown_device" id="" method="post" action="shutdown.php">' . "\n";
-        echo '<input type="submit" name=submit_button" id="submit_button" value="Shut down device" />' . "\n";
+        echo '<input type="submit" name="submit_button" id="submit_button" value="Shut down device" />' . "\n";
         echo '</td></tr>';
         echo '</form>' . "\n";
 
@@ -233,6 +258,27 @@
 
 /* Close Logs Tab */
 	echo '</div>' . "\n";
+
+/* Open Update Tab */
+        echo '<div id="update">' . "\n";
+
+/* Open table */
+        echo '<table align="center">' . "\n";
+        echo '<tr><th colspan="2">RaspiPass Update</th></tr>';
+        echo '</table>' . "\n";
+	echo '<div id="admin">' . "\n";
+        echo '<table align="center" class="buttontable">' . "\n";
+        echo '<tr><th colspan="3">Administrative Tasks</th></tr>';
+
+/* Update button */
+        echo '<tr><td class="buttoncell">';
+        echo '<form name="update" id="" method="post" action="update.php">' . "\n";
+        echo '<input type="submit" name="submit_button" id="submit_button" value="Update RaspiPbass" />' . "\n";
+        echo '</td>';
+        echo '</form>' . "\n";
+
+/* Close Update Tab */
+        echo '</div>' . "\n";
 
 /* Close Tabbed Section */
 echo '</div>' . "\n";

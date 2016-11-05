@@ -23,6 +23,7 @@ then
 	sudo chmod 664 /raspipass/runchance.txt
 	sudo chmod 755 /raspipass/log
 	sudo chmod 666 /raspipass/log/hostapd
+	sudo chmod 666 /raspipass/version
 	echo Done.
 	echo
 	
