@@ -269,7 +269,6 @@ if ($newversionavailable) {
         echo '<tr><th colspan="2">RaspiPass Update</th></tr>';
         echo '</table>' . "\n";
 	echo '<div id="admin">' . "\n";
-        echo '<table align="center" class="buttontable">' . "\n";
 
 /* Update button */
         echo '<tr><td class="buttoncell">';
@@ -277,7 +276,7 @@ if ($newversionavailable) {
         echo '<input type="submit" name="submit_button" id="submit_button" value="Update RaspiPass" />' . "\n";
         echo '</td>';
         echo '</form>' . "\n";
-
+	echo '</table>' . "\n";
 /* Close Update Tab */
         echo '</div>' . "\n";
 }

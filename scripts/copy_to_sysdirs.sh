@@ -13,7 +13,7 @@ then
 	
 	# /raspipass
 	echo Copying /git/raspipass...
-	rsync -ryW --del --force /git/raspipass /
+	rsync -vryW --exclude /raspipass/log/update.log --del --force /git/raspipass /
 	echo Setting permissions...
 	sudo chown -R raspi:raspi /raspipass
 	sudo chmod 664 /raspipass/config.ini
@@ -29,7 +29,7 @@ then
 	
 	# /raspi_secure
 	echo Copying /git/raspi_secure...
-	sudo rsync -ryW --del --force /git/raspi_secure /
+	sudo rsync -vryW --del --force /git/raspi_secure /
 	echo Setting permissions...
 	sudo chown -R root:root /raspi_secure
 	sudo chmod 644 /raspi_secure/firewall.rules
@@ -41,7 +41,7 @@ then
 	
 	# /var/www/html
 	echo Copying /git/html...
-	sudo rsync -ryW --del --force /git/html /var/www/
+	sudo rsync -vryW --del --force /git/html /var/www/
 	echo Setting permissions...
 	sudo chown -R www-data:www-data /var/www/html
 	sudo chmod -R 755 /var/www/html
