@@ -265,17 +265,17 @@ if ($newversionavailable) {
         echo '<div id="update">' . "\n";
 
 /* Open table */
-        echo '<table align="center">' . "\n";
+        echo '<table align="center" class="buttontable">' . "\n";
         echo '<tr><th colspan="2">RaspiPass Update</th></tr>';
-        echo '</table>' . "\n";
-	echo '<div id="admin">' . "\n";
 
 /* Update button */
-        echo '<tr><td class="buttoncell">';
+	echo '<tr>';
+        echo '<td class="buttoncell">';
         echo '<form name="update" id="" method="post" action="update.php">' . "\n";
         echo '<input type="submit" name="submit_button" id="submit_button" value="Update RaspiPass" />' . "\n";
-        echo '</td>';
         echo '</form>' . "\n";
+	echo '</td>' . "\n";
+	echo '</tr>' . "\n";
 	echo '</table>' . "\n";
 /* Close Update Tab */
         echo '</div>' . "\n";
