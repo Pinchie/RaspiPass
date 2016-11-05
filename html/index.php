@@ -270,7 +270,6 @@ if ($newversionavailable) {
         echo '</table>' . "\n";
 	echo '<div id="admin">' . "\n";
         echo '<table align="center" class="buttontable">' . "\n";
-        echo '<tr><th colspan="3">Administrative Tasks</th></tr>';
 
 /* Update button */
         echo '<tr><td class="buttoncell">';
