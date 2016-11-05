@@ -9,8 +9,8 @@
 <?php
 /* Read version file and latest version from URL, and compare */
 	$version=file("/raspipass/version");
-	$latestversion=file("https://raw.githubusercontent.com/Pinchie/RaspiPass/master/version");
-	$newversionavailable=version_compare($version[0],$latestversion[0]);
+	$latestversion=file("https://raw.githubusercontent.com/Pinchie/RaspiPass/master/raspipass/version");
+	$newversionavailable=version_compare($version[0],$latestversion[0],'<');
 
 /* Read config.ini */
         $config_array=parse_ini_file("/raspipass/config.ini");
@@ -28,7 +28,7 @@
 	echo '</tr>' . "\n";
 
 /* Notify of newer version */
-if ($newversionavailable==-1) {
+if ($newversionavailable) {
 	echo '<tr style="background-color:transparent">' . "\n";
 	echo '<td align="center" style="color: red" colspan="2">New version available: ';
 	echo $latestversion[0];
@@ -46,7 +46,7 @@ if ($newversionavailable==-1) {
 	echo '<li><a href="#maclist">StreetPass MACs</a></li>' . "\n";
 	echo '<li><a href="#admin">Admin Tasks</a></li>' . "\n";
 	echo '<li><a href="#logs">Log Viewer</a></li>' . "\n";
-if ($newversionavailable==-1) {
+if ($newversionavailable) {
 	echo '<li><a href="#update" style="color:darkred">Update</a></li>' . "\n";
 }
 	echo '</ul>' . "\n";
@@ -259,6 +259,8 @@ if ($newversionavailable==-1) {
 /* Close Logs Tab */
 	echo '</div>' . "\n";
 
+if ($newversionavailable) {
+
 /* Open Update Tab */
         echo '<div id="update">' . "\n";
 
@@ -279,7 +281,7 @@ if ($newversionavailable==-1) {
 
 /* Close Update Tab */
         echo '</div>' . "\n";
-
+}
 /* Close Tabbed Section */
 echo '</div>' . "\n";
 ?>
