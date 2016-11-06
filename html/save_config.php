@@ -33,7 +33,6 @@ $runinterval=$_POST['runinterval'];
         fwrite($hostapd,'### Leave everything below as standard' . "\n");
         fwrite($hostapd,'wpa=0' . "\n");
         fwrite($hostapd,'hw_mode=g' . "\n");
-        fwrite($hostapd,'ssid=attwifi' . "\n");
 	fclose($hostapd);
 	echo 'Done!' . "\n";
 

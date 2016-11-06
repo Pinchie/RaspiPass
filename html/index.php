@@ -43,7 +43,7 @@ if ($newversionavailable) {
 /* Create Tabs */
 	echo '<ul class="tabs" data-persist="true">' . "\n";
 	echo '<li><a href="#config">Configuration</a></li>' . "\n";
-	echo '<li><a href="#maclist">StreetPass MACs</a></li>' . "\n";
+	echo '<li><a href="#maclist">StreetPass APs</a></li>' . "\n";
 	echo '<li><a href="#admin">Admin Tasks</a></li>' . "\n";
 	echo '<li><a href="#logs">Log Viewer</a></li>' . "\n";
 if ($newversionavailable) {
@@ -179,8 +179,10 @@ if ($newversionavailable) {
 
 /* Start MAC address table */
         echo '<table align="center">' . "\n";
-	echo '<tr><th colspan="2">StreetPass Relay MACs</th></tr>';
-	echo '<tr><td>The following is a list of StreetPass Relay MAC addresses.<br>The RaspiPass script will randomly choose an address from the list to use.</td></tr>';
+	echo '<tr><th colspan="2">StreetPass Relay APs</th></tr>';
+	echo '<tr><td>The following is a list of StreetPass Relay SSIDs & MAC addresses.<br>' . "\n";
+	echo 'The RaspiPass script will randomly choose an access point from the list to use.<br>' . "\n";
+	echo 'The access points are saved in the format "SSID,MAC address"</td></tr>' . "\n";
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="MAC_list" cols="80" rows="10">' . "\n";

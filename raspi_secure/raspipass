@@ -51,6 +51,7 @@ else
 		probability=20
 	fi
 fi
+
 # Run probability calculation
 echo "Running random check with $probability% chance..."
 raspiroll=`shuf -i 1-100 -n 1`
@@ -65,12 +66,19 @@ if [ $raspiroll -le $probability ]; then
 	fi
 	ifconfig wlan0 down
 	ifdown wlan0
-	new_mac=`rl -c 1 /raspipass/mac_addresses.txt`
-	echo Changing MAC address to $new_mac
-	/usr/bin/macchanger -m $new_mac wlan0 > /dev/null
+
+# Copy base hostapd.conf to /run and append SSID
+	cp /raspipass/hostapd.conf /run/hostapd.conf
+	IFS=',' read -a apsettings <<< `rl -c 1 /raspipass/mac_addresses.txt`
+	echo Using SSID ${apsettings[0]} and MAC address ${apsettings[1]}
+	echo "ssid=${apsettings[0]}" >> /run/hostapd.conf
+	echo Changing MAC address...
+	/usr/bin/macchanger -m ${apsettings[1]} wlan0 > /dev/null
 	ifup wlan0
+
+# Bring up AP
 	echo "Bringing up access point..."
-	bash -c "/usr/sbin/hostapd -t /raspipass/hostapd.conf" >> /var/log/hostapd &
+	bash -c "/usr/sbin/hostapd -t /run/hostapd.conf" >> /var/log/hostapd &
 	echo killall hostapd | at now + 5 minutes > /dev/null
 else
 #	echo "$raspiroll > $probability - not continuing."
