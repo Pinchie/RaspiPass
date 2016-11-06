@@ -64,7 +64,7 @@ $runinterval=$_POST['runinterval'];
 	fwrite($crontab,'# Edit this file to introduce tasks to be run by cron.' . "\n");
 	fwrite($crontab,'#' . "\n");
 	fwrite($crontab,'# m h  dom mon dow   command' . "\n");
-	fwrite($crontab,'*/' . $runinterval . ' * * * * /raspi_secure/raspipass > /raspipass/log/hostapd' . "\n");
+	fwrite($crontab,'*/' . $runinterval . ' * * * * /raspi_secure/raspipass > /run/log/hostapd' . "\n");
 	fclose($crontab);
 	exec('sudo crontab -u root /raspipass/crontab.txt');
 	unlink("/raspipass/crontab.txt");

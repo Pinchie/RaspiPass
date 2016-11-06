@@ -1,1 +1,5 @@
-0.7.2
+0.7.3
+Moved some files (eg hostapd config, logs) to /run and /run/log to reduce SD load
+Implemented use of APs with different SSIDs (AP data now saved in SSID,MAC form to ease copying from the homepass spreadsheet)
+Made some update script fixes
+
