@@ -15,8 +15,7 @@ echo "" | sudo tee /var/log/apache2/access.log > /dev/null
 echo "" | sudo tee /var/log/apache2/other_vhosts_access.log > /dev/null
 sudo rm /var/log/apache2/*.log.* 2> /dev/null
 echo hostapd...
-echo "" > /raspipass/log/hostapd
-echo "" > /raspipass/log/update.log
+echo "" > /run/log/hostapd
 echo Done.
 echo config.ini...
 echo "; RaspiPass configuration file for web frontend" > /raspipass/config.ini

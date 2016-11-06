@@ -244,11 +244,11 @@ if ($newversionavailable) {
         echo '<tr><th colspan="2">Log Viewer</th></tr>';
 
 /* Print /raspipass/log/hostapd */
-        echo '<tr><td>/raspipass/log/hostapd</td></tr>';
+        echo '<tr><td>/run/log/hostapd</td></tr>';
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="hostapd_log" cols="80" rows="15" readonly="readonly">' . "\n";
-        $hostapd_log=fopen("/raspipass/log/hostapd","r");
+        $hostapd_log=fopen("/run/log/hostapd","r");
         while (!feof($hostapd_log)) {
                 $hostapd_log_line = fgets($hostapd_log);
                 print $hostapd_log_line;

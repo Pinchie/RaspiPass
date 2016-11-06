@@ -11,6 +11,6 @@ echo "" > /var/log/apache2/access.log
 echo "" > /var/log/apache2/other_vhosts_access.log
 rm /var/log/apache2/*.log.* 2> /dev/null
 echo hostapd...
-echo "" > /raspipass/log/hostapd
+echo "" > /run/log/hostapd
 echo Done.
 
