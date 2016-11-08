@@ -24,9 +24,7 @@ then
 	sudo chmod 664 /raspipass/mac_addresses.txt
 	sudo chmod 664 /raspipass/mac_restrict.txt
 	sudo chmod 664 /raspipass/runchance.txt
-	sudo chmod 755 /raspipass/log
-	sudo chmod 666 /raspipass/log/hostapd
-	sudo chmod 666 /raspipass/version
+	sudo chmod 664 /raspipass/version
 	echo Done.
 	echo
 	

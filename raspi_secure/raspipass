@@ -7,7 +7,7 @@ if [ -n "$1" ]; then
 	if [ $1 -eq $1 ] 2> /dev/null; then
 #		echo "Integer parameter found"
 		if [ $1 -gt 0 ] && [ $1 -le 100 ]; then
-			echo "Running with manual probability of $1"
+			echo "Running with manual probability of $1%"
 			probability=$1
 		else
 			echo "ERROR: Probabilty parameter is out of range. Using default of 20%"
@@ -19,10 +19,11 @@ if [ -n "$1" ]; then
 	fi
 else
 #	echo "No parameter found"
+
 # Check probability file
-	echo "Checking for probability file..."
+	echo "Checking for probability setting..."
 	if [ -f /raspipass/runchance.txt ]; then
-		echo "/raspipass/runchance.txt found. Reading probability."
+#		echo "/raspipass/runchance.txt found. Reading probability."
 		if [ "`grep $'\x60' /raspipass/runchance.txt`" ]; then
 			echo "Source file contains illegal character(s). Aborting sourcing."
 			echo "Using default probability of 20."
@@ -31,17 +32,17 @@ else
 			source /raspipass/runchance.txt
 #			echo "Probability is $probability"
 			if [ -z $probability ]; then
-				echo "File read. Probability not set. Using default of 20."
+#				echo "File read. Probability not set. Using default of 20."
 				probability=20
 			else
 				if [ $probability -eq $probability ] 2> /dev/null; then
-					echo "Probability manually set at $probability"
+					echo "Probability set at $probability%"
 				else
-					echo "ERROR: Probability is not an integer. Using default of 20."
+					echo "ERROR: Probability value in file is not an integer. Using default of 20."
 					probability=20
 				fi
 				if [ $probability -lt 0 ] || [ $probability -gt 100 ]; then
-					echo "ERROR: Probability is out of range. Using default of 20."
+					echo "ERROR: Probability value in file is out of range. Using default of 20."
 					probability=20
 				fi
 			fi
@@ -56,6 +57,7 @@ fi
 echo "Running random check with $probability% chance..."
 raspiroll=`shuf -i 1-100 -n 1`
 if [ $raspiroll -le $probability ]; then
+# Successful roll
 #	echo "$raspiroll <= $probability... bringing up AP."
 	echo "Random check passed - bringing up AP."
 	echo "Closing any existing hostapd processes..."
@@ -78,9 +80,10 @@ if [ $raspiroll -le $probability ]; then
 
 # Bring up AP
 	echo "Bringing up access point..."
-	bash -c "/usr/sbin/hostapd -t /run/hostapd.conf" >> /var/log/hostapd &
+	bash -c "/usr/sbin/hostapd -t /run/hostapd.conf" >> /run/log/hostapd &
 	echo killall hostapd | at now + 5 minutes > /dev/null
 else
+# Unsuccessful roll
 #	echo "$raspiroll > $probability - not continuing."
 	echo "Random check did not pass - not bringing up AP."
 fi
