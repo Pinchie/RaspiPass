@@ -29,13 +29,13 @@
 	echo '</tr>' . "\n";
 
 /* Notify of newer version */
-/* if ($newversionavailable) {
+ if ($newversionavailable) {
 	echo '<tr style="background-color:transparent">' . "\n";
 	echo '<td align="center" style="color: red" colspan="2">New version available: ';
 	echo $latestversion[0];
 	echo '</td>' . "\n";
 	echo '</tr>' . "\n";
- } */
+ } 
 
 /* Close header table */
 
@@ -47,9 +47,9 @@
 	echo '<li><a href="#maclist">StreetPass APs</a></li>' . "\n";
 	echo '<li><a href="#admin">Admin Tasks</a></li>' . "\n";
 	echo '<li><a href="#logs">Log Viewer</a></li>' . "\n";
-// if ($newversionavailable) {
+ if ($newversionavailable) {
 	echo '<li><a href="#update" /* style="color:darkred */">Update</a></li>' . "\n";
-// }
+ }
 	echo '</ul>' . "\n";
 
 /* Start Configuration Tab */
@@ -262,7 +262,7 @@
 /* Close Logs Tab */
 	echo '</div>' . "\n";
 
-// if ($newversionavailable) {
+ if ($newversionavailable) {
 
 /* Open Update Tab */
         echo '<div id="update">' . "\n";
@@ -282,7 +282,7 @@
 	echo '</table>' . "\n";
 /* Close Update Tab */
         echo '</div>' . "\n";
-// }
+ }
 /* Close Tabbed Section */
 echo '</div>' . "\n";
 ?>
