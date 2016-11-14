@@ -7,11 +7,15 @@
 </head>
 <body>
 <?php
-/* Read version file and latest version from URL, and compare - temp. removed*/
+/* Read version file and latest version from and compare */
 	$version=file("/raspipass/version");
-//	$latestversion=file("https://raw.githubusercontent.com/Pinchie/RaspiPass/master/raspipass/version");
-	$latestversion=file("/raspipass/version");
-	$newversionavailable=version_compare($version[0],$latestversion[0],'<');
+	if (file_exists('/run/rpi-latestversion')) {
+		$latestversion=file("/run/rpi-latestversion");
+		$newversionavailable=version_compare($version[0],$latestversion[0],'<');
+	}
+	else {
+		$newversionavailable=0;
+	}
 
 /* Read config.ini */
         $config_array=parse_ini_file("/raspipass/config.ini");
