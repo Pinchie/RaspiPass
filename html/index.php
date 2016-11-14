@@ -7,7 +7,7 @@
 </head>
 <body>
 <?php
-/* Read version file and latest version from and compare */
+/* Read version file and latest version, and compare */
 	$version=file("/raspipass/version");
 	if (file_exists('/run/rpi-latestversion')) {
 		$latestversion=file("/run/rpi-latestversion");
