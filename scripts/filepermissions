@@ -1,0 +1,14 @@
+Location, User:Group owner, Numeric permission, Set recursively (directories only) [TRUE/FALSE]
+/raspipass,raspi:raspi,755,FALSE
+/raspipass/config.ini,raspi:raspi,664,FALSE
+/raspipass/hostapd.conf,raspi:raspi,664,FALSE
+/raspipass/mac_addresses.txt,raspi:raspi,664,FALSE
+/raspipass/mac_restrict.txt,raspi:raspi,664,FALSE
+/raspipass/runchance.txt,raspi:raspi,664,FALSE
+/raspipass/version,raspi:raspi,664,FALSE
+/raspi_secure,root:root,700,FALSE
+/raspi_secure/firewall.rules,root:root,644,FALSE
+/raspi_secure/iptables.sh,root:root,744,FALSE
+/raspi_secure/raspipass,root:root,744,FALSE
+/raspi_secure/clear_logs.sh,root:root,744,FALSE
+/var/www/html,www-data:www-data,755,TRUE
