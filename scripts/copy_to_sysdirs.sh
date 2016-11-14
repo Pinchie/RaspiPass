@@ -6,11 +6,11 @@
 echo "This will copy all files from the /git working directories to the RaspiPass system directories."
 echo "Proceeding will cause all matching files in the RaspiPass system directories to be overwritten."
 echo "Non-matching files in the RaspiPass system directories will be deleted!"
-if [ "$1" != "auto" ]
+if [[ ! "$@" =~ "-a" ]]
 then
 	read -p "Are you sure you want to proceed? [Y/N] " -r -n 1
 fi
-if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ $1 = "auto" ]]
+if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$@" =~ "-a" ]]
 then
         echo
 	
@@ -41,24 +41,30 @@ then
 		then
 			if [ $recurse == "TRUE" ]
 			then
+				echo Recursively applying $owner,$perm to $file
 				chown -R $owner $file
 				chmod -R $perm $file
 			else
+				echo Applying $owner,$perm to $file
 				chown $owner $file
 				chmod $perm $file
 			fi
 		else
 	
-		# Then files and bad references
-			if [ -f "$file" ]
+		# Then files, as long as they aren't in /git/scripts
+			if [ -f "$file" ] && [[ ! "$file" =~ "/git/scripts" ]]
 			then
+				echo Applying $owner,$perm to $file
 				chown $owner $file
 				chmod $perm $file
 			else
-		# Ignore first line ($file="Location") and any blank links
-				if [ "$file" != "Location" ] && [ -n "$file" ]
+		# Ignore the following the first line, any files in /git/scripts, and any blank lines. Return error
+		# for remaining files.
+				if [ "$file" != "Location" ] && [ -n "$file" ] && [[ ! "$file" =~ "/git/scripts" ]]
 				then
 					echo ERROR: $file does not exist!
+				else
+					echo Skipping $file
 				fi
 			fi
 		fi

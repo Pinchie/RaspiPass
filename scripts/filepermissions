@@ -12,3 +12,8 @@ Location, User:Group owner, Numeric permission, Set recursively (directories onl
 /raspi_secure/raspipass,root:root,744,FALSE
 /raspi_secure/clear_logs.sh,root:root,744,FALSE
 /var/www/html,www-data:www-data,755,TRUE
+/git/scripts/copy_to_sysdirs.sh,root:root,766,FALSE
+/git/scripts/set_defaults.sh,root:root,766,FALSE
+/git/scripts/set_interfaces.sh,root:root,766,FALSE
+/git/scripts/filepermissions,root:root,644,FALSE
+
