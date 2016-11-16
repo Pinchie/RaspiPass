@@ -5,11 +5,17 @@
 echo Clearing logs
 echo dmesg...
 dmesg -C
+echo syslog...
+echo "" > /var/log/syslog
+echo Kernal log...
+echo "" > /var/log/kern.log
+echo "Old logs (logrotated)..."
+rm /var/log/*.{1..9}* 2> /dev/null
 echo Apache2...
+rm /var/log/apache2/*.log
 echo "" > /var/log/apache2/error.log
 echo "" > /var/log/apache2/access.log
 echo "" > /var/log/apache2/other_vhosts_access.log
-rm /var/log/apache2/*.log.* 2> /dev/null
 echo hostapd...
 echo "" > /run/log/hostapd
 echo Done.
