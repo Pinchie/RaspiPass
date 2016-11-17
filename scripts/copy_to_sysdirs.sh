@@ -58,7 +58,7 @@ then
 				chown $owner $file
 				chmod $perm $file
 			else
-		# Ignore the following the first line, any files in /git/scripts, and any blank lines. Return error
+		# Ignore the following: the first line, any files in /git/scripts, and any blank lines. Return error
 		# for remaining files.
 				if [ "$file" != "Location" ] && [ -n "$file" ] && [[ ! "$file" =~ "/git/scripts" ]]
 				then
