@@ -6,17 +6,12 @@
 #
 # To be run as root
 
-echo Clearing logs
-echo dmesg...
-sudo dmesg -C
-echo Apache2...
-echo "" | sudo tee /var/log/apache2/error.log > /dev/null
-echo "" | sudo tee /var/log/apache2/access.log > /dev/null
-echo "" | sudo tee /var/log/apache2/other_vhosts_access.log > /dev/null
-sudo rm /var/log/apache2/*.log.* 2> /dev/null
-echo hostapd...
-echo "" > /run/log/hostapd
-echo Done.
+# Call log clearing script
+/raspi_secure/clear_logs.sh
+echo ""
+echo Settings defaults:
+
+# Apply defaults to config.ini
 echo config.ini...
 echo "; RaspiPass configuration file for web frontend" > /raspipass/config.ini
 echo "; Edit this config via the web interface" >> /raspipass/config.ini
@@ -26,14 +21,16 @@ echo "wifi_channel=\"10\"" >> /raspipass/config.ini
 echo "mac_restriction=0" >> /raspipass/config.ini
 echo "runchance=\"20\"" >> /raspipass/config.ini
 echo "runinterval=\"6\"" >> /raspipass/config.ini
-echo Done.
+
+# Apply defaults to runchance.txt
 echo runchance.txt...
 echo "# RaspiPass probability file" > /raspipass/runchance.txt
 echo "# This determines the chance of the access point being" >> /raspipass/runchance.txt
 echo "# raisd when the script runs." >> /raspipass/runchance.txt
 echo "# This is best edited via the web configuration." >> /raspipass/runchance.txt
 echo "probability=20" >> /raspipass/runchance.txt
-echo Done.
+
+# Apply default Git config for /git directory
 echo git config...
 echo "[core]" > /git/.git/config
 echo "	repositoryformatversion = 0" >> /git/.git/config
@@ -47,3 +44,7 @@ echo "" >> /git/.git/config
 echo "[remote \"origin\"]" >> /git/.git/config
 echo "	url = https://github.com/Pinchie/RaspiPass" >> /git/.git/config
 echo "	fetch = +refs/heads/*:refs/remotes/origin/*" >> /git/.git/config
+
+# Done
+echo ""
+echo Logs have been cleared and settings reverted to default.
