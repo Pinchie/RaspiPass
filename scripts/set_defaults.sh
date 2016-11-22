@@ -7,6 +7,38 @@
 # To be run as root
 
 # Call log clearing script
+
+errcho() { echo "$@" 1>&2; }
+
+# Read command-line parameters
+while getopts ":h" opt; do
+        case "$opt" in
+                h)
+                        HELP=true
+                        ;;
+                \?)
+                        errcho "Invalid option: -$OPTARG"
+                        exit 1
+                        ;;
+	         :)
+                        errcho "Option -$OPTARG requires an argument."
+                        exit 1
+                        ;;
+
+        esac
+done
+
+if [[ $HELP == true ]]
+then
+        echo "set_defaults.sh -- Clear RaspiPass and system log files, and reset to default configuration"
+        echo
+        echo "USAGE: set_defaults.sh [OPTIONS]"
+        echo
+        echo "Option            Meaning"
+        echo "-h                This help text"
+        exit 0
+fi
+
 /raspi_secure/clear_logs.sh
 echo ""
 echo Settings defaults:

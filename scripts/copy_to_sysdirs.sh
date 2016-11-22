@@ -5,6 +5,7 @@
 
 # Read parameters
 
+errcho() { echo "$@" 1>&2; }
 while getopts ":ah" opt; do
 	case "$opt" in
 		a)
@@ -14,9 +15,13 @@ while getopts ":ah" opt; do
 			HELP=true
 			;;
 		\?)
-			echo "Invalid option: -$OPTARG"
+			errcho "Invalid option: -$OPTARG"
 			exit 1
 			;;
+	         :)
+                        errcho "Option -$OPTARG requires an argument."
+                        exit 1
+                        ;;
 	esac
 done
 
@@ -31,8 +36,6 @@ then
 	echo "-h  		This help text"
 	exit 0
 fi
-
-echo $AUTO
 
 if [[ $AUTO != true ]]
 then
@@ -94,7 +97,7 @@ then
 		# for remaining files.
 				if [ "$file" != "Location" ] && [ -n "$file" ] && [[ ! "$file" =~ "/git/scripts" ]]
 				then
-					echo ERROR: $file does not exist!
+					errcho ERROR: $file does not exist!
 				else
 					echo Skipping $file
 				fi
