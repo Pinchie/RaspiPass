@@ -30,6 +30,8 @@ if [[ $HELP == true ]]
 then
         echo "raspipass -- Main RaspiPass script. Uses defined probability to calculate whether to raise a"
 	echo "             StreetPass Relay access point."
+	echo
+	echo "*** NOTE: To be run with sudo, or as root"
         echo
         echo "USAGE: raspipass [OPTIONS]"
         echo

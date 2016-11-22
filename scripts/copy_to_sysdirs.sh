@@ -29,6 +29,8 @@ if [[ $HELP == true ]]
 then
 	echo "copy_to_sysdirs.sh -- transfer RaspiPass /git working directory to running directories"
 	echo
+	echo "*** NOTE: To be run with sudo, or as root"
+        echo
 	echo "USAGE: copy_to_scriptdirs.sh [OPTIONS]"
 	echo
 	echo "Option		Meaning"

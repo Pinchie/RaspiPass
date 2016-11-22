@@ -6,8 +6,6 @@
 #
 # To be run as root
 
-# Call log clearing script
-
 errcho() { echo "$@" 1>&2; }
 
 # Read command-line parameters
@@ -32,6 +30,8 @@ if [[ $HELP == true ]]
 then
         echo "set_defaults.sh -- Clear RaspiPass and system log files, and reset to default configuration"
         echo
+	echo "*** NOTE: To be run with sudo, or as root"
+        echo
         echo "USAGE: set_defaults.sh [OPTIONS]"
         echo
         echo "Option            Meaning"
@@ -39,6 +39,7 @@ then
         exit 0
 fi
 
+# Call log clearing script
 /raspi_secure/clear_logs.sh
 echo ""
 echo Settings defaults:
