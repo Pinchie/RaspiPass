@@ -3,14 +3,46 @@
 # Copy files from git directory to system directories and set 
 # permissions 
 
-echo "This will copy all files from the /git working directories to the RaspiPass system directories."
-echo "Proceeding will cause all matching files in the RaspiPass system directories to be overwritten."
-echo "Non-matching files in the RaspiPass system directories will be deleted!"
-if [[ ! "$@" =~ "-a" ]]
+# Read parameters
+
+while getopts ":ah" opt; do
+	case "$opt" in
+		a)
+			AUTO=true
+			;;
+		h)
+			HELP=true
+			;;
+		\?)
+			echo "Invalid option: -$OPTARG"
+			exit 1
+			;;
+	esac
+done
+
+if [[ $HELP == true ]]
 then
+	echo "copy_to_sysdirs.sh -- transfer RaspiPass /git working directory to running directories"
+	echo
+	echo "USAGE: copy_to_scriptdirs.sh [OPTIONS]"
+	echo
+	echo "Option		Meaning"
+	echo "-a  		Run without confirmation (automated)"
+	echo "-h  		This help text"
+	exit 0
+fi
+
+echo $AUTO
+
+if [[ $AUTO != true ]]
+then
+	echo "This will copy all files from the /git working directories to the RaspiPass system directories."
+	echo "Proceeding will cause all matching files in the RaspiPass system directories to be overwritten."
+	echo "Non-matching files in the RaspiPass system directories will be deleted!"
 	read -p "Are you sure you want to proceed? [Y/N] " -r -n 1
 fi
-if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$@" =~ "-a" ]]
+
+if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ $AUTO == true ]]
 then
         echo
 	
