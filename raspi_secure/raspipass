@@ -6,7 +6,7 @@ errcho() { echo "$@" 1>&2; }
 
 # Read command-line parameters
 
-while getopts ":hp:" opt; do
+while getopts ":hp:m:" opt; do
         case "$opt" in
 		p)
 			probability=$OPTARG
@@ -15,6 +15,9 @@ while getopts ":hp:" opt; do
                 h)
                         HELP=true
                         ;;
+		m)
+			IFS=',' read -a apsettings <<< $OPTARG
+			;;
                 \?)
                         errcho "Invalid option: -$OPTARG"
                         exit 1
@@ -29,7 +32,7 @@ done
 if [[ $HELP == true ]]
 then
         echo "raspipass -- Main RaspiPass script. Uses defined probability to calculate whether to raise a"
-	echo "             StreetPass Relay access point."
+	echo "             StreetPass Relay access point, and raises one for five minutes if successful"
 	echo
 	echo "*** NOTE: To be run with sudo, or as root"
         echo
@@ -37,8 +40,33 @@ then
         echo
         echo "Option		Meaning"
         echo "-h		This help text"
+	echo "-m [SSID],[MAC]	Use manual options of [SSID] and [MAC] for AP"
 	echo "-p [%]		Set manual probability of raising AP"
         exit 0
+fi
+
+# Check command-line parameters are valid, if present
+if [[ $probability ]]
+then
+	if ! [ "$probability" -eq "$probability" ] 2> /dev/null || [ $probability -le 0 ] || [ $probability -gt 100 ]
+	then
+		errcho ERROR: Probability must be a number between 1 and 100
+		exit 1
+	fi
+fi
+
+if [[ $apsettings ]]
+then
+	if ! [[ "${apsettings[0]}" =~ ^[a-zA-Z0-9]*$ ]]
+	then
+		errcho ERROR: SSID ${apsettings[0]} contains illegal characters
+		exit 1
+	fi
+	if ! [[ "${apsettings[1]}" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]
+	then
+		errcho ERROR: MAC address ${apsettings[1]} is invalid
+		exit 1
+	fi
 fi
 
 echo `date`
@@ -72,7 +100,7 @@ fi
 
 # Check probability is valid
 
-if [ ! $probability -eq $probability ] 2> /dev/null
+if ! [ "$probability" -eq "$probability" ] 2> /dev/null
 then
 	errcho "ERROR: Probability value is not an integer. Using default of 20%."
 	probability=20
@@ -103,7 +131,10 @@ then
 
 # Copy base hostapd.conf to /run and append SSID
 	cp /raspipass/hostapd.conf /run/hostapd.conf
-	IFS=',' read -a apsettings <<< `rl -c 1 /raspipass/mac_addresses.txt`
+	if [ -z $apsettings ]
+	then
+		IFS=',' read -a apsettings <<< `rl -c 1 /raspipass/mac_addresses.txt`
+	fi
 	echo Using SSID ${apsettings[0]} and MAC address ${apsettings[1]}
 	echo "ssid=${apsettings[0]}" >> /run/hostapd.conf
 	echo Changing MAC address...
