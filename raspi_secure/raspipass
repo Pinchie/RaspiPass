@@ -10,7 +10,6 @@ while getopts ":hp:m:" opt; do
         case "$opt" in
 		p)
 			probability=$OPTARG
-			echo Probability manually set at $OPTARG%
 			;;
                 h)
                         HELP=true
@@ -50,8 +49,10 @@ if [[ $probability ]]
 then
 	if ! [ "$probability" -eq "$probability" ] 2> /dev/null || [ $probability -le 0 ] || [ $probability -gt 100 ]
 	then
-		errcho ERROR: Probability must be a number between 1 and 100
+		errcho ERROR: Probability must be an integer from 1 to 100
 		exit 1
+	else
+		echo Probability manually set at $probability
 	fi
 fi
 
@@ -67,6 +68,7 @@ then
 		errcho ERROR: MAC address ${apsettings[1]} is invalid
 		exit 1
 	fi
+	echo Using SSID \"${apsettings[0]}\" and MAC address \"${apsettings[1]}\"
 fi
 
 echo `date`
