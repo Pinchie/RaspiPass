@@ -1,5 +1,6 @@
 Location, User:Group owner, Numeric permission, Set recursively (directories only) [TRUE/FALSE]
 /raspipass,raspi:raspi,755,FALSE
+/raspipass/crontab.txt,raspi:raspi,664,FALSE
 /raspipass/config.ini,raspi:raspi,664,FALSE
 /raspipass/hostapd.conf,raspi:raspi,664,FALSE
 /raspipass/mac_addresses.txt,raspi:raspi,664,FALSE
