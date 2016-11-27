@@ -39,6 +39,12 @@ then
 	exit 0
 fi
 
+# Retained for pre-0.7.4 compatibility
+if [ "$1" = "auto" ]
+then
+	AUTO=true
+fi
+
 if [[ $AUTO != true ]]
 then
 	echo "This will copy all files from the /git working directories to the RaspiPass system directories."
