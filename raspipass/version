@@ -1,6 +1,10 @@
-0.7.3
-Moved some files (eg hostapd config, logs) to /run and /run/log to reduce SD load
-Implemented use of APs with different SSIDs (AP data now saved in SSID,MAC form to ease copying from the homepass spreadsheet)
-Made some update script fixes
-
+0.7.4
+Standardised scripts with parameters - all scripts now have an -h parameter
+Improved update script
+Altered copy_to_sysdirs.sh to reference a csv file /git/scripts/filepermissions to use as a source when copying & setting permissions
+Added more logs to /raspi_secure/clear_logs.sh
+Cleaned up output of clear_logs.sh and set_defaults.sh
+Removed lots of commented out that were used during initial debugging
+Removed copy_to_gitdir.sh - this was only required when I wasn't using Git properly :)
+Set up daily downloading of latest version file from GitHub raw servers (for update checking)
 
