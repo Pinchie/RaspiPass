@@ -7,10 +7,18 @@
 </head>
 <body>
 <?php
+/* Check all required files exist before proceeding - if any are missing, direct to error.php */
+	function errordirect($errormsg) {
+	        $errorlog=fopen("/var/log/raspipass/web-error.log","w");
+	        fwrite($errorlog, $errormsg);
+	        fclose($errorlog);
+		header('Location: error.php');
+	}
+
 /* Read version file and latest version, and compare */
 	$version=file("/raspipass/version");
-	if (file_exists('/run/rpi-latestversion')) {
-		$latestversion=file("/run/rpi-latestversion");
+	if (file_exists('/var/log/raspipass/rpi-latestversion')) {
+		$latestversion=file("/var/log/raspipass/rpi-latestversion");
 		$newversionavailable=version_compare($version[0],$latestversion[0],'<');
 	}
 	else {
@@ -249,11 +257,11 @@
         echo '<tr><th colspan="2">Log Viewer</th></tr>';
 
 /* Print /raspipass/log/hostapd */
-        echo '<tr><td>/run/log/hostapd</td></tr>';
+        echo '<tr><td>/var/log/raspipass/hostapd</td></tr>';
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="hostapd_log" cols="80" rows="15" readonly="readonly">' . "\n";
-        $hostapd_log=fopen("/run/log/hostapd","r");
+        $hostapd_log=fopen("/var/log/raspipass/hostapd","r");
         while (!feof($hostapd_log)) {
                 $hostapd_log_line = fgets($hostapd_log);
                 print $hostapd_log_line;
