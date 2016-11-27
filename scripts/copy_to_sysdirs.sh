@@ -107,8 +107,39 @@ then
 		fi
 	done < /git/scripts/filepermissions
 
+	# Update 0.7.4+ - add /var/log/raspipass and /var/log/apache2 RAMdisk entries to fstab, if they do not exist
+	echo
+	echo Checking for RAMdisk entries in fstab
+	if grep -q raspipass /etc/fstab
+	then
+		echo RaspiPass entry already exists.
+	else
+		echo RaspiPass entry does not exist! Adding...
+		echo "tmpfs    /var/log/raspipass    tmpfs    defaults,noatime,nosuid,mode=0777,size=10m    0 0" >> /etc/fstab
+		reboot_required=1
+	fi
+	if grep -q apache2 /etc/fstab
+	then
+		echo Apache2 logs entry already exists.
+	else
+		echo Apache2 logs entry does not exist! Adding...
+		echo "tmpfs    /var/log/apache2    tmpfs    defaults,noatime,nosuid,mode=0777,size=100m    0 0" >> /etc/fstab
+		reboot_required=1
+	fi
+
+	echo
+	echo All done.
+
+	# Prompt to reboot, if required
+	if [ $reboot_required ]
+	then
+		echo
+		echo *** WARNING: Reboot required to complete changes! Please run 'sudo reboot'
+	fi
 
 else
 	echo
 	echo Exiting...
 fi
+
+

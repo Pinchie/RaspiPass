@@ -132,20 +132,20 @@ then
 	ifdown wlan0
 
 # Copy base hostapd.conf to /run and append SSID
-	cp /raspipass/hostapd.conf /run/hostapd.conf
+	cp /raspipass/hostapd.conf /var/log/raspipass/hostapd.conf
 	if [ -z $apsettings ]
 	then
 		IFS=',' read -a apsettings <<< `rl -c 1 /raspipass/mac_addresses.txt`
 	fi
 	echo Using SSID ${apsettings[0]} and MAC address ${apsettings[1]}
-	echo "ssid=${apsettings[0]}" >> /run/hostapd.conf
+	echo "ssid=${apsettings[0]}" >> /var/log/raspipass/hostapd.conf
 	echo Changing MAC address...
 	/usr/bin/macchanger -m ${apsettings[1]} wlan0 > /dev/null
 	ifup wlan0
 
 # Bring up AP
 	echo "Bringing up access point..."
-	bash -c "/usr/sbin/hostapd -t /run/hostapd.conf" > /run/log/hostapd &
+	bash -c "/usr/sbin/hostapd -t /var/log/hostapd.conf" > /var/log/raspipass/hostapd &
 	echo killall hostapd | at now + 5 minutes > /dev/null
 else
 # Unsuccessful roll
