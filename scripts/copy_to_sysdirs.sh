@@ -141,6 +141,10 @@ then
 	then
 		echo
 		echo "*** WARNING: Reboot required to complete changes! Please run 'sudo reboot'"
+		if [ ! -d /var/raspipass ]
+		then
+			mkdir /var/raspipass
+		fi
 		echo "Reboot required following system changes made by copy_to_sysdirs.sh" > /var/raspipass/reboot
 	fi
 
