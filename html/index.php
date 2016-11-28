@@ -282,7 +282,7 @@
         echo '<table align="center">' . "\n";
         echo '<tr><th colspan="2">Log Viewer</th></tr>';
 
-/* Print /raspipass/log/hostapd */
+/* Print /var/log/raspipass/hostapd */
         echo '<tr><td>/var/log/raspipass/hostapd</td></tr>';
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
@@ -296,7 +296,7 @@
 	        fclose($hostapd_log);
 	}
 	else {
-                errordirect(" is not present, or inaccessible");
+                echo 'No /var/log/raspipass/hostapd file present.';
         }
 	echo '</textarea>' . "\n";
 	echo '</td>' . "\n";
