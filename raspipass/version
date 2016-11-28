@@ -7,4 +7,7 @@ Cleaned up output of clear_logs.sh and set_defaults.sh
 Removed lots of commented out that were used during initial debugging
 Removed copy_to_gitdir.sh - this was only required when I wasn't using Git properly :)
 Set up daily downloading of latest version file from GitHub raw servers (for update checking)
+Configured two tmpfs files mounted on /var/log/raspipass and /var/log/apache2 to reduce SD use
+Added configuration in copy_to_sysdirs.sh to create these mount points in fstab if they do not exist (reboot required after)
+Moved almost every dynamic RaspiPass file (eg logs, dynamic config) to /var/log/raspipass
 

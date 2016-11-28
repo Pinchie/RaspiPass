@@ -145,7 +145,10 @@ then
 
 # Bring up AP
 	echo "Bringing up access point..."
-	bash -c "/usr/sbin/hostapd -t /var/log/hostapd.conf" > /var/log/raspipass/hostapd &
+	echo
+	echo
+	echo "hostapd output may follow below."
+	bash -c "/usr/sbin/hostapd -t /var/log/raspipass/hostapd.conf" >> /var/log/raspipass/hostapd &
 	echo killall hostapd | at now + 5 minutes > /dev/null
 else
 # Unsuccessful roll

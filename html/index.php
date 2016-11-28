@@ -296,7 +296,7 @@
 	        fclose($hostapd_log);
 	}
 	else {
-                echo 'No /var/log/raspipass/hostapd file present.';
+                echo 'No /var/log/raspipass/hostapd file present - RaspiPass has probably not run since boot';
         }
 	echo '</textarea>' . "\n";
 	echo '</td>' . "\n";
