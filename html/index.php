@@ -62,6 +62,16 @@
 	echo '</tr>' . "\n";
  } 
 
+/* Notify of required reboot */
+	if (file_exists('/var/log/raspipass/reboot')) {
+		$rebootmsg=file("/var/log/raspipass/reboot");
+		echo '<tr style="background-color:transparent">' . "\n";
+		echo '<td align="center" style="color: red" colspan="2">';
+		echo $rebootmsg[0];
+		echo '</td>' . "\n";
+		echo '</tr>' . "\n";
+	}
+
 /* Close header table */
 
 	echo '</table>' . "\n";

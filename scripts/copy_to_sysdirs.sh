@@ -140,7 +140,8 @@ then
 	if [ $reboot_required ]
 	then
 		echo
-		echo *** WARNING: Reboot required to complete changes! Please run 'sudo reboot'
+		echo "*** WARNING: Reboot required to complete changes! Please run 'sudo reboot'"
+		echo "Reboot required following system changes made by copy_to_sysdirs.sh" > /var/log/raspipass/reboot
 	fi
 
 else
