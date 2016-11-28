@@ -20,8 +20,8 @@
         echo '<tr><td>Error log:</td></tr>' . "\n";;
 	echo '<td>' . "\n";
         echo '<Textarea name="error_log" cols="80" rows="15" readonly="readonly">' . "\n";
-	if (file_exists('/var/log/raspipass/web-error.log')) {
-	        $errorlist=fopen("/var/log/raspipass/web-error.log","r");
+	if (file_exists('/var/raspipass/web-error.log')) {
+	        $errorlist=fopen("/var/raspipass/web-error.log","r");
 	        while (!feof($errorlist)) {
 	                $errorline = fgets($errorlist);
 	                print $errorline;

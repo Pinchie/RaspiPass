@@ -58,21 +58,21 @@ $runinterval=$_POST['runinterval'];
 
 /* Write crontab */
 	echo "Writing crontab ... ";
-	file_put_contents("/var/log/raspipass/crontab.txt","");
-	$crontab=fopen("/var/log/raspipass/crontab.txt","a");
+	file_put_contents("/var/raspipass/crontab.txt","");
+	$crontab=fopen("/var/raspipass/crontab.txt","a");
 	fwrite($crontab,'MAILTO=""' . "\n");
-	fwrite($crontab,'## Edit this file to introduce tasks to be run by cron.' . "\n");
+	fwrite($crontab,'# Edit this file to introduce tasks to be run by cron.' . "\n");
 	fwrite($crontab,'#' . "\n");
 	fwrite($crontab,'# m h  dom mon dow   command' . "\n");
 	fwrite($crontab,"\n");
 	fwrite($crontab,'# Run RaspiPass every ' . $runinterval . ' minutes - configured via Web GUI' . "\n");
-	fwrite($crontab,'*/' . $runinterval . ' * * * * /raspi_secure/raspipass > /var/log/raspipass/hostapd' . "\n");
+	fwrite($crontab,'*/' . $runinterval . ' * * * * /raspi_secure/raspipass > /var/raspipass/hostapd.log' . "\n");
 	fwrite($crontab,"\n");
 	fwrite($crontab,'# Download latest version info file daily - used for update checking' . "\n");
-	fwrite($crontab,'0 0 * * * wget -qb -O /var/log/raspipass/rpi-latestversion https://raw.githubusercontent.com/Pinchie/RaspiPass/master/raspipass/version' . "\n");
+	fwrite($crontab,'0 0 * * * wget -qb -O /var/raspipass/rpi-latestversion https://raw.githubusercontent.com/Pinchie/RaspiPass/master/raspipass/version' . "\n");
 	fclose($crontab);
-	exec('sudo crontab -u root /var/log/raspipass/crontab.txt');
-	unlink('/var/log/raspipass/crontab.txt');
+	exec('sudo crontab -u root /var/raspipass/crontab.txt');
+	unlink('/var/raspipass/crontab.txt');
 	echo "Done!" . "\n";
 
 /* Write config.ini */

@@ -43,6 +43,6 @@ rm /var/log/apache2/*.log
 echo "" > /var/log/apache2/error.log
 echo "" > /var/log/apache2/access.log
 echo "" > /var/log/apache2/other_vhosts_access.log
-echo "" > /var/log/raspipass/hostapd
+echo "" > /var/raspipass/hostapd
 echo Done.
 

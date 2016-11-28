@@ -10,7 +10,7 @@
 	ob_start();
 /* Function for redirecting on error */
 	function errordirect($errormsg) {
-	        $errorlog=fopen("/var/log/raspipass/web-error.log","w");
+	        $errorlog=fopen("/var/raspipass/web-error.log","w");
 	        fwrite($errorlog, $errormsg);
 	        fclose($errorlog);
 		header('Location: error.php');
@@ -24,8 +24,8 @@
 		$version="0";
 	}
 
-	if (file_exists('/var/log/raspipass/rpi-latestversion')) {
-		$latestversion=file("/var/log/raspipass/rpi-latestversion");
+	if (file_exists('/var/raspipass/rpi-latestversion')) {
+		$latestversion=file("/var/raspipass/rpi-latestversion");
 		$newversionavailable=version_compare($version[0],$latestversion[0],'<');
 	}
 	else {
@@ -63,8 +63,8 @@
  } 
 
 /* Notify of required reboot */
-	if (file_exists('/var/log/raspipass/reboot')) {
-		$rebootmsg=file("/var/log/raspipass/reboot");
+	if (file_exists('/var/raspipass/reboot')) {
+		$rebootmsg=file("/var/raspipass/reboot");
 		echo '<tr style="background-color:transparent">' . "\n";
 		echo '<td align="center" style="color: red" colspan="2">';
 		echo $rebootmsg[0];
@@ -292,13 +292,13 @@
         echo '<table align="center">' . "\n";
         echo '<tr><th colspan="2">Log Viewer</th></tr>';
 
-/* Print /var/log/raspipass/hostapd */
-        echo '<tr><td>/var/log/raspipass/hostapd</td></tr>';
+/* Print /var/raspipass/hostapd.log */
+        echo '<tr><td>/var/raspipass/hostapd.log</td></tr>';
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="hostapd_log" cols="80" rows="15" readonly="readonly">' . "\n";
-	if (file_exists('/var/log/raspipass/hostapd')) {
-	        $hostapd_log=fopen("/var/log/raspipass/hostapd","r");
+	if (file_exists('/var/raspipass/hostapd.log')) {
+	        $hostapd_log=fopen("/var/raspipass/hostapd.log","r");
 	        while (!feof($hostapd_log)) {
 	                $hostapd_log_line = fgets($hostapd_log);
 	                print $hostapd_log_line;
@@ -306,7 +306,7 @@
 	        fclose($hostapd_log);
 	}
 	else {
-                echo 'No /var/log/raspipass/hostapd file present - RaspiPass has probably not run since boot';
+                echo 'No /var/raspipass/hostapd.log file present - RaspiPass has probably not run since boot';
         }
 	echo '</textarea>' . "\n";
 	echo '</td>' . "\n";
