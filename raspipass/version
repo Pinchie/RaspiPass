@@ -4,10 +4,11 @@ Improved update script
 Altered copy_to_sysdirs.sh to reference a csv file /git/scripts/filepermissions to use as a source when copying & setting permissions
 Added more logs to /raspi_secure/clear_logs.sh
 Cleaned up output of clear_logs.sh and set_defaults.sh
-Removed lots of commented out that were used during initial debugging
+Removed lots of commented out lines of code that were used during initial debugging
 Removed copy_to_gitdir.sh - this was only required when I wasn't using Git properly :)
 Set up daily downloading of latest version file from GitHub raw servers (for update checking)
-Configured two tmpfs files mounted on /var/log/raspipass and /var/log/apache2 to reduce SD use
+Configured two tmpfs drives mounted on /var/log/raspipass and /var/log/apache2 in order to reduce SD use
 Added configuration in copy_to_sysdirs.sh to create these mount points in fstab if they do not exist (reboot required after)
+Added notification of required reboot to Web GUI (triggered by presence of /var/log/raspipass/reboot - message is contents of first line
 Moved almost every dynamic RaspiPass file (eg logs, dynamic config) to /var/log/raspipass
 
