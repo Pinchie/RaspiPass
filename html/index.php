@@ -7,7 +7,8 @@
 </head>
 <body>
 <?php
-/* Check all required files exist before proceeding - if any are missing, direct to error.php */
+	ob_start();
+/* Function for redirecting on error */
 	function errordirect($errormsg) {
 	        $errorlog=fopen("/var/log/raspipass/web-error.log","w");
 	        fwrite($errorlog, $errormsg);
@@ -16,7 +17,13 @@
 	}
 
 /* Read version file and latest version, and compare */
-	$version=file("/raspipass/version");
+	if (file_exists('/raspipass/version')) {
+		$version=file("/raspipass/version");
+	}
+	else {
+		$version="0";
+	}
+
 	if (file_exists('/var/log/raspipass/rpi-latestversion')) {
 		$latestversion=file("/var/log/raspipass/rpi-latestversion");
 		$newversionavailable=version_compare($version[0],$latestversion[0],'<');
@@ -26,7 +33,13 @@
 	}
 
 /* Read config.ini */
-        $config_array=parse_ini_file("/raspipass/config.ini");
+	if (file_exists('/raspipass/config.ini')) {
+	        $config_array=parse_ini_file("/raspipass/config.ini");
+	}
+	else {
+                errordirect("/raspipass/config.ini is not present, or inaccessible");
+        }
+
 
 /* Header Table */
 	echo '<table align="center">' . "\n";
@@ -139,7 +152,8 @@
         echo '</tr>' . "\n";
 
 /* MAC restriction */
-/*        echo '<tr>' . "\n";
+/*
+        echo '<tr>' . "\n";
         echo '<td>' . "\n";
 	echo 'MAC Restriction:' . "\n";
         echo '</td>' . "\n";
@@ -158,13 +172,19 @@
         echo '</tr>' . "\n";
         echo '<tr>' . "\n";
         echo '<td colspan="3">' . "\n";
-	echo '<Textarea name="MAC_list" cols="80" rows="10">' . "\n";
-	$maclist=fopen("/raspipass/mac_restrict.txt","r");
-        while (!feof($maclist)) {
-                $macline = fgets($maclist);
-                print $macline;
+	echo '<Textarea name="MACR_list" cols="80" rows="10">' . "\n";
+	if (file_exists('/raspipass/mac_restrict.txt')) {
+		$macrlist=fopen("/raspipass/mac_restrict.txt","r");
+	        while (!feof($macrlist)) {
+	                $macrline = fgets($macrlist);
+	                print $macrline;
+	        }
+	        fclose($macrlist);
+	}
+	else {
+                errordirect("/raspipass/mac_restrict.txt is not present, or inaccessible");
         }
-        fclose($maclist);
+
 	echo '</Textarea>' . "\n";
         echo '</td>' . "\n";
         echo '</tr>' . "\n";
@@ -199,12 +219,18 @@
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="MAC_list" cols="80" rows="10">' . "\n";
-        $maclist=fopen("/raspipass/mac_addresses.txt","r");
-        while (!feof($maclist)) {
-                $macline = fgets($maclist);
-                print $macline;
+	if (file_exists('/raspipass/mac_addresses.txt')) {
+	        $maclist=fopen("/raspipass/mac_addresses.txt","r");
+	        while (!feof($maclist)) {
+	                $macline = fgets($maclist);
+	                print $macline;
+	        }
+	        fclose($maclist);
+	}
+	else {
+                errordirect("/raspipass/mac_addresses.txt is not present, or inaccessible");
         }
-        fclose($maclist);
+
         echo '</Textarea>' . "\n";
         echo '</td>' . "\n";
 	echo '</tr>' . "\n";
@@ -261,12 +287,17 @@
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="hostapd_log" cols="80" rows="15" readonly="readonly">' . "\n";
-        $hostapd_log=fopen("/var/log/raspipass/hostapd","r");
-        while (!feof($hostapd_log)) {
-                $hostapd_log_line = fgets($hostapd_log);
-                print $hostapd_log_line;
+	if (file_exists('/var/log/raspipass/hostapd')) {
+	        $hostapd_log=fopen("/var/log/raspipass/hostapd","r");
+	        while (!feof($hostapd_log)) {
+	                $hostapd_log_line = fgets($hostapd_log);
+	                print $hostapd_log_line;
+	        }
+	        fclose($hostapd_log);
+	}
+	else {
+                errordirect(" is not present, or inaccessible");
         }
-        fclose($hostapd_log);
 	echo '</textarea>' . "\n";
 	echo '</td>' . "\n";
 	echo '</table>' . "\n";
