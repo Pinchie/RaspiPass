@@ -1,89 +1,156 @@
 #!/bin/bash
+# Main RaspiPass script - calculates whether a random check passes, and raises an access point
+# with details drawn from /raspipass/mac_addresses.txt
+
+errcho() { echo "$@" 1>&2; }
+
+# Read command-line parameters
+
+while getopts ":hp:m:" opt; do
+        case "$opt" in
+		p)
+			probability=$OPTARG
+			;;
+                h)
+                        HELP=true
+                        ;;
+		m)
+			IFS=',' read -a apsettings <<< $OPTARG
+			;;
+                \?)
+                        errcho "Invalid option: -$OPTARG"
+                        exit 1
+                        ;;
+		:)
+			errcho "Option -$OPTARG requires an argument."
+			exit 1
+			;;
+        esac
+done
+
+if [[ $HELP == true ]]
+then
+        echo "raspipass -- Main RaspiPass script. Uses defined probability to calculate whether to raise a"
+	echo "             StreetPass Relay access point, and raises one for five minutes if successful"
+	echo
+	echo "*** NOTE: To be run with sudo, or as root"
+        echo
+        echo "USAGE: raspipass [OPTIONS]"
+        echo
+        echo "Option		Meaning"
+        echo "-h		This help text"
+	echo "-m [SSID],[MAC]	Use manual options of [SSID] and [MAC] for AP"
+	echo "-p [%]		Set manual probability of raising AP"
+        exit 0
+fi
+
+# Check command-line parameters are valid, if present
+if [[ $probability ]]
+then
+	if ! [ "$probability" -eq "$probability" ] 2> /dev/null || [ $probability -le 0 ] || [ $probability -gt 100 ]
+	then
+		errcho ERROR: Probability must be an integer from 1 to 100
+		exit 1
+	else
+		echo Probability manually set at $probability
+	fi
+fi
+
+if [[ $apsettings ]]
+then
+	if ! [[ "${apsettings[0]}" =~ ^[a-zA-Z0-9]*$ ]]
+	then
+		errcho ERROR: SSID ${apsettings[0]} contains illegal characters
+		exit 1
+	fi
+	if ! [[ "${apsettings[1]}" =~ ^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$ ]]
+	then
+		errcho ERROR: MAC address ${apsettings[1]} is invalid
+		exit 1
+	fi
+	echo Using SSID \"${apsettings[0]}\" and MAC address \"${apsettings[1]}\"
+fi
+
 echo `date`
 echo "Starting RaspiPass..."
 
-if [ -n "$1" ]; then
-#	echo "Parameter $1 found - checking for integer"
-	if [ $1 -eq $1 ] 2> /dev/null; then
-#		echo "Integer parameter found"
-		if [ $1 -gt 0 ] && [ $1 -le 100 ]; then
-			echo "Running with manual probability of $1%"
-			probability=$1
-		else
-			echo "ERROR: Probabilty parameter is out of range. Using default of 20%"
-			probability=20
-		fi
-	else
-		echo "ERROR: Probability parameter is not an integer. Using default of 20%"
-		probability=20
-	fi
-else
-#	echo "No parameter found"
-
 # Check probability file
+if [ -z $probability ]
+then
 	echo "Checking for probability setting..."
-	if [ -f /raspipass/runchance.txt ]; then
+	if [ -f /raspipass/runchance.txt ]
+	then
 #		echo "/raspipass/runchance.txt found. Reading probability."
-		if [ "`grep $'\x60' /raspipass/runchance.txt`" ]; then
-			echo "Source file contains illegal character(s). Aborting sourcing."
-			echo "Using default probability of 20."
+		if [ "`grep $'\x60' /raspipass/runchance.txt`" ]
+		then
+			errcho "Source file contains illegal character(s). Aborting sourcing."
+			errcho "Using default probability of 20%."
 			probability=20
 		else
 			source /raspipass/runchance.txt
-#			echo "Probability is $probability"
-			if [ -z $probability ]; then
-#				echo "File read. Probability not set. Using default of 20."
+			if [ -z $probability ]
+			then
+				errcho "File read. Probability not set. Using default of 20%."
 				probability=20
-			else
-				if [ $probability -eq $probability ] 2> /dev/null; then
-					echo "Probability set at $probability%"
-				else
-					echo "ERROR: Probability value in file is not an integer. Using default of 20."
-					probability=20
-				fi
-				if [ $probability -lt 0 ] || [ $probability -gt 100 ]; then
-					echo "ERROR: Probability value in file is out of range. Using default of 20."
-					probability=20
-				fi
 			fi
 		fi
 	else
-		echo "/raspipass/runchance.txt not found. Using default probability of 20."
+		errcho "/raspipass/runchance.txt not found. Using default probability of 20%."
 		probability=20
 	fi
+fi
+
+# Check probability is valid
+
+if ! [ "$probability" -eq "$probability" ] 2> /dev/null
+then
+	errcho "ERROR: Probability value is not an integer. Using default of 20%."
+	probability=20
+fi
+
+if [ $probability -le 0 ] || [ $probability -gt 100 ]
+then
+	errcho "ERROR: Probability value is out of range. Using default of 20%."
+	probability=20
 fi
 
 # Run probability calculation
 echo "Running random check with $probability% chance..."
 raspiroll=`shuf -i 1-100 -n 1`
-if [ $raspiroll -le $probability ]; then
+if [ $raspiroll -le $probability ]
+then
 # Successful roll
-#	echo "$raspiroll <= $probability... bringing up AP."
 	echo "Random check passed - bringing up AP."
 	echo "Closing any existing hostapd processes..."
 	killall hostapd 2> /dev/null
 	exitstat=$?
-	if [ $exitstat -eq 0 ]; then
+	if [ $exitstat -eq 0 ]
+	then
 		echo "hostapd successfully terminated."
 	fi
 	ifconfig wlan0 down
 	ifdown wlan0
 
 # Copy base hostapd.conf to /run and append SSID
-	cp /raspipass/hostapd.conf /run/hostapd.conf
-	IFS=',' read -a apsettings <<< `rl -c 1 /raspipass/mac_addresses.txt`
+	cp /raspipass/hostapd.conf /var/raspipass/hostapd.conf
+	if [ -z $apsettings ]
+	then
+		IFS=',' read -a apsettings <<< `rl -c 1 /raspipass/mac_addresses.txt`
+	fi
 	echo Using SSID ${apsettings[0]} and MAC address ${apsettings[1]}
-	echo "ssid=${apsettings[0]}" >> /run/hostapd.conf
+	echo "ssid=${apsettings[0]}" >> /var/raspipass/hostapd.conf
 	echo Changing MAC address...
 	/usr/bin/macchanger -m ${apsettings[1]} wlan0 > /dev/null
 	ifup wlan0
 
 # Bring up AP
 	echo "Bringing up access point..."
-	bash -c "/usr/sbin/hostapd -t /run/hostapd.conf" >> /run/log/hostapd &
+	echo
+	echo
+	echo "hostapd output may follow below."
+	bash -c "/usr/sbin/hostapd -t /var/raspipass/hostapd.conf" >> /var/raspipass/hostapd.log &
 	echo killall hostapd | at now + 5 minutes > /dev/null
 else
 # Unsuccessful roll
-#	echo "$raspiroll > $probability - not continuing."
-	echo "Random check did not pass - not bringing up AP."
+	echo "Random check did not pass - not raising an access point this time."
 fi

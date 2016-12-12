@@ -7,14 +7,39 @@
 </head>
 <body>
 <?php
-/* Read version file and latest version from URL, and compare - temp. removed*/
-	$version=file("/raspipass/version");
-//	$latestversion=file("https://raw.githubusercontent.com/Pinchie/RaspiPass/master/raspipass/version");
-	$latestversion=file("/raspipass/version");
-	$newversionavailable=version_compare($version[0],$latestversion[0],'<');
+	ob_start();
+/* Function for redirecting on error */
+	function errordirect($errormsg) {
+	        $errorlog=fopen("/var/raspipass/web-error.log","w");
+	        fwrite($errorlog, $errormsg);
+	        fclose($errorlog);
+		header('Location: error.php');
+	}
+
+/* Read version file and latest version, and compare */
+	if (file_exists('/raspipass/version')) {
+		$version=file("/raspipass/version");
+	}
+	else {
+		$version="0";
+	}
+
+	if (file_exists('/var/raspipass/rpi-latestversion')) {
+		$latestversion=file("/var/raspipass/rpi-latestversion");
+		$newversionavailable=version_compare($version[0],$latestversion[0],'<');
+	}
+	else {
+		$newversionavailable=0;
+	}
 
 /* Read config.ini */
-        $config_array=parse_ini_file("/raspipass/config.ini");
+	if (file_exists('/raspipass/config.ini')) {
+	        $config_array=parse_ini_file("/raspipass/config.ini");
+	}
+	else {
+                errordirect("/raspipass/config.ini is not present, or inaccessible");
+        }
+
 
 /* Header Table */
 	echo '<table align="center">' . "\n";
@@ -36,6 +61,16 @@
 	echo '</td>' . "\n";
 	echo '</tr>' . "\n";
  } 
+
+/* Notify of required reboot */
+	if (file_exists('/var/raspipass/reboot')) {
+		$rebootmsg=file("/var/raspipass/reboot");
+		echo '<tr style="background-color:transparent">' . "\n";
+		echo '<td align="center" style="color: red" colspan="2">';
+		echo $rebootmsg[0];
+		echo '</td>' . "\n";
+		echo '</tr>' . "\n";
+	}
 
 /* Close header table */
 
@@ -127,7 +162,8 @@
         echo '</tr>' . "\n";
 
 /* MAC restriction */
-/*        echo '<tr>' . "\n";
+/*
+        echo '<tr>' . "\n";
         echo '<td>' . "\n";
 	echo 'MAC Restriction:' . "\n";
         echo '</td>' . "\n";
@@ -146,13 +182,19 @@
         echo '</tr>' . "\n";
         echo '<tr>' . "\n";
         echo '<td colspan="3">' . "\n";
-	echo '<Textarea name="MAC_list" cols="80" rows="10">' . "\n";
-	$maclist=fopen("/raspipass/mac_restrict.txt","r");
-        while (!feof($maclist)) {
-                $macline = fgets($maclist);
-                print $macline;
+	echo '<Textarea name="MACR_list" cols="80" rows="10">' . "\n";
+	if (file_exists('/raspipass/mac_restrict.txt')) {
+		$macrlist=fopen("/raspipass/mac_restrict.txt","r");
+	        while (!feof($macrlist)) {
+	                $macrline = fgets($macrlist);
+	                print $macrline;
+	        }
+	        fclose($macrlist);
+	}
+	else {
+                errordirect("/raspipass/mac_restrict.txt is not present, or inaccessible");
         }
-        fclose($maclist);
+
 	echo '</Textarea>' . "\n";
         echo '</td>' . "\n";
         echo '</tr>' . "\n";
@@ -187,12 +229,18 @@
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="MAC_list" cols="80" rows="10">' . "\n";
-        $maclist=fopen("/raspipass/mac_addresses.txt","r");
-        while (!feof($maclist)) {
-                $macline = fgets($maclist);
-                print $macline;
+	if (file_exists('/raspipass/mac_addresses.txt')) {
+	        $maclist=fopen("/raspipass/mac_addresses.txt","r");
+	        while (!feof($maclist)) {
+	                $macline = fgets($maclist);
+	                print $macline;
+	        }
+	        fclose($maclist);
+	}
+	else {
+                errordirect("/raspipass/mac_addresses.txt is not present, or inaccessible");
         }
-        fclose($maclist);
+
         echo '</Textarea>' . "\n";
         echo '</td>' . "\n";
 	echo '</tr>' . "\n";
@@ -244,17 +292,22 @@
         echo '<table align="center">' . "\n";
         echo '<tr><th colspan="2">Log Viewer</th></tr>';
 
-/* Print /raspipass/log/hostapd */
-        echo '<tr><td>/run/log/hostapd</td></tr>';
+/* Print /var/raspipass/hostapd.log */
+        echo '<tr><td>/var/raspipass/hostapd.log</td></tr>';
         echo '<tr>' . "\n";
         echo '<td colspan="2">' . "\n";
         echo '<Textarea name="hostapd_log" cols="80" rows="15" readonly="readonly">' . "\n";
-        $hostapd_log=fopen("/run/log/hostapd","r");
-        while (!feof($hostapd_log)) {
-                $hostapd_log_line = fgets($hostapd_log);
-                print $hostapd_log_line;
+	if (file_exists('/var/raspipass/hostapd.log')) {
+	        $hostapd_log=fopen("/var/raspipass/hostapd.log","r");
+	        while (!feof($hostapd_log)) {
+	                $hostapd_log_line = fgets($hostapd_log);
+	                print $hostapd_log_line;
+	        }
+	        fclose($hostapd_log);
+	}
+	else {
+                echo 'No /var/raspipass/hostapd.log file present - RaspiPass has probably not run since boot';
         }
-        fclose($hostapd_log);
 	echo '</textarea>' . "\n";
 	echo '</td>' . "\n";
 	echo '</table>' . "\n";

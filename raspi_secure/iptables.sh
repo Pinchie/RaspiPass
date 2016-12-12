@@ -4,6 +4,40 @@
 # To restore previously-saved rules, you are better off running:
 # sudo iptables-restore < /raspi_secure/firewall.rules
 
+errcho() { echo "$@" 1>&2; }
+
+# Read command-line parameters
+while getopts ":h" opt; do
+        case "$opt" in
+                h)
+                        HELP=true
+                        ;;
+                \?)
+                        errcho "Invalid option: -$OPTARG"
+                        exit 1
+                        ;;
+                 :)
+                        errcho "Option -$OPTARG requires an argument."
+                        exit 1
+                        ;;
+
+        esac
+done
+
+if [[ $HELP == true ]]
+then
+        echo "iptables.sh -- Set iptables rules"
+        echo
+        echo "*** NOTE: To be run with sudo, or as root"
+	echo "If trying to restore rules, consider using \"sudo iptables-restore < /raspi_secure/firewall.rules\" instead"
+        echo
+        echo "USAGE: iptables.sh [OPTIONS]"
+        echo
+        echo "Option		Meaning"
+        echo "-h		This help text"
+        exit 0
+fi
+
 # Allow loopback
 iptables -I INPUT 1 -i lo -j ACCEPT
 
