@@ -1,4 +1,4 @@
-0.7.4b1
+0.7.4
 Standardised scripts with parameters - all scripts now have an -h parameter
 Improved update script
 Altered copy_to_sysdirs.sh to reference a csv file /git/scripts/filepermissions to use as a source when copying & setting permissions
