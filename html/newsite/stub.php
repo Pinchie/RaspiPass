@@ -4,6 +4,19 @@ require('setup.php');
 $smarty = new Smarty_Main();
 $smarty->setCaching(true);
 
+      if (file_exists('/var/raspipass/web-error.log')) {
+                $errorlist=fopen("/var/raspipass/web-error.log","r");
+                while (!feof($errorlist)) {
+                        $errorline = fgets($errorlist);
+                        print $errorline;
+                }
+                fclose($errorlist);
+                smarty->assign('errorlist',$errorlist)
+        }
+        else {
+                echo 'DOUBLE-DOWN ERROR: Could not read error from file' . "\n";
+        }
+
 // Load dat template
-$smarty->display('PUT_TPL_FILE_HERE');
+$smarty->display('error.tpl');
 ?>
