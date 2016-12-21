@@ -23,6 +23,15 @@ class Smarty_Main extends Smarty {
         $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
         $this->assign('app_name', 'RaspiPass');
 	$this->debugging = true;
+// Read config.ini and assign to smarty variables
+        if (file_exists('/raspipass/config.ini')) {
+                $config_array=parse_ini_file("/raspipass/config.ini");
+		$this->assign('config_array',$config_array);
+        }
+        else {
+		$this->assign('errormessage','/raspipass/config.ini is not present, or inaccessible');
+        }
+
    }
 
 }

@@ -14,18 +14,11 @@ $smarty->assign('title','RaspiPass Configuration Page');
 		header('Location: error.php');
 	}
 
-// Read config.ini and assign to smarty variables
-	if (file_exists('/raspipass/config.ini')) {
-	        $config_array=parse_ini_file("/raspipass/config.ini");
-		$smarty->assign('wifi_country',$config_array[wifi_country]);
-		$smarty->assign('wifi_channel',$config_array[wifi_channel]);
-		$smarty->assign('mac_restriction',$config_array[mac_restriction]);
-		$smarty->assign('runchance',$config_array[runchance]);
-		$smarty->assign('runinterval',$config_array[runinterval]);
-	}
-	else {
-                errordirect("/raspipass/config.ini is not present, or inaccessible");
-        }
+// Redirect if $errorline has been carried
+$errormessage=$smarty->getTemplateVars('errormessage');
+if ($errormessage) {
+	errordirect($errormessage);
+}
 
 // Read version from file, if it exists
 if (file_exists('/raspipass/version')) {
