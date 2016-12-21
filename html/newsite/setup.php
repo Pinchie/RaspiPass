@@ -16,12 +16,13 @@ class Smarty_Main extends Smarty {
         // Class Constructor.
         // These automatically get set with each new instance.
         parent::__construct();
-        $this->setTemplateDir('./smarty/templates/');
-        $this->setCompileDir('./smarty/templates_c/');
-        $this->setConfigDir('./smarty/configs/');
-        $this->setCacheDir('./smarty/cache/');
+        $this->setTemplateDir('./templates/');
+        $this->setCompileDir('./templates_c/');
+        $this->setConfigDir('./configs/');
+        $this->setCacheDir('./cache/');
         $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
         $this->assign('app_name', 'RaspiPass');
+	$this->debugging = true;
    }
 
 }
