@@ -1,6 +1,26 @@
 <?php
-// Read Smarty config and initialise a new instance w/caching
-require('setup.php');
+// Configure Smarty environment - not called from external php file to avoid
+// circular redirecting
+define('SMARTY_DIR', './smarty/libs/');
+require_once(SMARTY_DIR . 'Smarty.class.php');
+
+class Smarty_Main extends Smarty {
+
+   function __construct()
+   {
+        // Class Constructor.
+        // These automatically get set with each new instance.
+        parent::__construct();
+        $this->setTemplateDir('./templates/');
+        $this->setCompileDir('./templates_c/');
+        $this->setConfigDir('./configs/');
+        $this->setCacheDir('./cache/');
+        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+        $this->assign('app_name', 'RaspiPass');
+        $this->debugging = true;
+    }
+}
+
 $smarty = new Smarty_Main();
 $smarty->setCaching(true);
 

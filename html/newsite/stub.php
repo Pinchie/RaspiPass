@@ -1,6 +1,7 @@
 <?php
 // Read Smarty config and initialise a new instance w/caching
-require('setup.php');
+require('setup.php'); // Load Smarty configuration
+require('errordirect.php'); // Load errordirect() function
 $smarty = new Smarty_Main();
 $smarty->setCaching(true);
 

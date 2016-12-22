@@ -4,11 +4,6 @@
 define('SMARTY_DIR', './smarty/libs/');
 require_once(SMARTY_DIR . 'Smarty.class.php');
 
-// The setup.php file is a good place to load
-// required application library files, and you
-// can do that right here. An example:
-// require('guestbook/guestbook.lib.php');
-
 class Smarty_Main extends Smarty {
 
    function __construct()
@@ -29,7 +24,10 @@ class Smarty_Main extends Smarty {
 		$this->assign('config_array',$config_array);
         }
         else {
-		$this->assign('errormessage','/raspipass/config.ini is not present, or inaccessible');
+		$errorlog=fopen("/var/raspipass/web-error.log","w");
+	        fwrite($errorlog, "/raspipass/config.ini is not present, or inaccessible");
+	        fclose($errorlog);
+	        header('Location: error.php');
         }
 
    }

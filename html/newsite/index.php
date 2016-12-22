@@ -1,24 +1,11 @@
 <?php
 // Read Smarty config and initialise a new instance w/caching
+require('errordirect.php'); // Add errordirect() function
 require('setup.php');
 $smarty = new Smarty_Main();
 $smarty->setCaching(true);
 
 $smarty->assign('title','RaspiPass Configuration Page');
-
-// Set up redirection on error
-	function errordirect($errormsg) {
-	        $errorlog=fopen("/var/raspipass/web-error.log","w");
-	        fwrite($errorlog, $errormsg);
-	        fclose($errorlog);
-		header('Location: error.php');
-	}
-
-// Redirect if $errorline has been carried
-$errormessage=$smarty->getTemplateVars('errormessage');
-if ($errormessage) {
-	errordirect($errormessage);
-}
 
 // Read version from file, if it exists
 if (file_exists('/raspipass/version')) {
