@@ -15,20 +15,10 @@ class Smarty_Main extends Smarty {
         $this->setCompileDir('./templates_c/');
         $this->setConfigDir('./configs/');
         $this->setCacheDir('./cache/');
-        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+//        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+	$this->caching = 0;
         $this->assign('app_name', 'RaspiPass');
 	$this->debugging = true;
-// Read config.ini and assign to smarty variables
-        if (file_exists('/raspipass/config.ini')) {
-                $config_array=parse_ini_file("/raspipass/config.ini");
-		$this->assign('config_array',$config_array);
-        }
-        else {
-		$errorlog=fopen("/var/raspipass/web-error.log","w");
-	        fwrite($errorlog, "/raspipass/config.ini is not present, or inaccessible");
-	        fclose($errorlog);
-	        header('Location: error.php');
-        }
 
    }
 

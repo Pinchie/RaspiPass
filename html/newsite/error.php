@@ -25,10 +25,10 @@ $smarty = new Smarty_Main();
 $smarty->setCaching(true);
 
       if (file_exists('/var/raspipass/web-error.log')) {
-		$smarty->assign('errorlist',file('/var/raspipass/web-error.log',FILE_IGNORE_NEW_LINES));
+		$smarty->assign('errorlist',file('/var/raspipass/web-error.log',FILE_IGNORE_NEW_LINES,true));
         }
         else {
-                $smarty->assign('errorlist','DOUBLE-DOWN ERROR: Could not read original error from file');
+                $smarty->assign('errorlist','DOUBLE-DOWN ERROR: Could not read original error from file',true);
         }
 
 // Load dat template

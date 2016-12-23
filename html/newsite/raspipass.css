@@ -74,3 +74,67 @@ table.buttontable td {
 	margin: auto;
 	display: block;	
 }
+
+iframe.mainbody {
+	border: 2px solid white;
+	outline: none;
+	width: 100%;
+	height: 700px;
+}
+
+iframe.menutable {
+	border: 2px solid red;
+	outline: none;
+	width: 100%;
+	height: 60px;
+}
+
+table.menutable {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+table.menutable tr {
+    background: none;
+}
+
+table.menutable td {
+    padding: 1px;
+    font-size: 0;
+    margin:0;
+    text-align: center;
+    margin: 0;
+    margin-right:10px;
+    font: normal 12px Verdana;
+    text-decoration: none;
+    padding: 6px 16px;
+    border: 1px solid #444444;
+    color: #000000;
+    background: #897FAB;
+    outline:none;
+    font-weight: bold;
+    height:100%;
+}
+
+table.menutable td:hover
+{
+    top: 0px;
+    font-weight:bold;
+    background: #B9AFDB;
+    border: 1px solid #444444;
+    font: normal 12px Verdana;
+    text-decoration: none;
+    position: relative;
+    padding: 6px 16px;
+    color: #000000;
+    outline:none;
+    font-weight: bold;
+}
+
+table.menutable a
+{
+    font: normal 12px Verdana;
+    text-decoration: none;
+    font-weight:bold;
+    color: #000000;
+}

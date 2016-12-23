@@ -5,11 +5,8 @@ require('scripts/errordirect.php'); // Load errordirect() function
 $smarty = new Smarty_Main();
 $smarty->setCaching(true);
 
-$smarty->assign('title','TITLE_GOES_HERE');
-
-//
-
+$smarty->assign('title','Header menu');
 
 // Load dat template
-$smarty->display('TPL_FILE_HERE');
+$smarty->display('head_menu.tpl');
 ?>
