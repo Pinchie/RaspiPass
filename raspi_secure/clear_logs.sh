@@ -34,15 +34,18 @@ then
         exit 0
 fi
 
-echo Clearing logs: dmesg, syslog, kernel, apache2, hostapd, rotated logs...
+echo Clearing logs: dmesg, syslog, kernel, apache2, hostapd, rotated, login history logs...
 dmesg -C
-echo "" > /var/log/syslog
-echo "" > /var/log/kern.log
+echo > /var/log/syslog
+echo > /var/log/kern.log
 rm /var/log/*.{1..9}* 2> /dev/null
 rm /var/log/apache2/*.log
-echo "" > /var/log/apache2/error.log
-echo "" > /var/log/apache2/access.log
-echo "" > /var/log/apache2/other_vhosts_access.log
-echo "" > /var/raspipass/hostapd
+echo > /var/log/apache2/error.log
+echo > /var/log/apache2/access.log
+echo > /var/log/apache2/other_vhosts_access.log
+echo > /var/raspipass/hostapd
+echo > /var/log/wtmp
+echo > /var/log/btmp
+echo > /var/log/lastlog
 echo Done.
 
