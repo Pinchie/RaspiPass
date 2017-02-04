@@ -3,7 +3,7 @@
 require('setup.php'); // Load Smarty configuration
 require('scripts/errordirect.php'); // Load errordirect() function
 $smarty = new Smarty_Main();
-$smarty->setCaching(true);
+$smarty->setCaching(false);
 $smarty->assign('title','Raspipass Config');
 // Call external wifi country/channel arrays
 require('scripts/wificountries.php');
