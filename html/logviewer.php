@@ -14,7 +14,7 @@ $smarty->assign('title','Log Viewer');
 	        $hostapd_log=fopen("/var/raspipass/hostapd.log","r");
 	        while (!feof($hostapd_log)) {
 	                $hostapd_log_line = trim(preg_replace('/\s+/', ' ', fgets($hostapd_log)));
-	                $smarty->append('logcontents',$hostapd_log_line,nocache);
+	                $smarty->append('logcontents',$hostapd_log_line);
 	        }
 	        fclose($hostapd_log);
 	}

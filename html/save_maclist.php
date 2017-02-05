@@ -6,7 +6,7 @@
 /* Write MAC address list */
         echo 'Writing Streetpass Relay MAC list ... ';
         file_put_contents("/raspipass/mac_addresses.txt","");
-	$mac_whitelist=fopen("/raspipass/mac_addresses.txt","a");
+		$mac_whitelist=fopen("/raspipass/mac_addresses.txt","a");
         fwrite($mac_whitelist,$MAC_list);
         fclose($mac_whitelist);
         echo "Done!\n";

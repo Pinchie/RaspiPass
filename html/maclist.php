@@ -14,7 +14,7 @@ $smarty->assign('title','MAC Address List');
 	        while (!feof($maclist)) {
 	                $macline = trim(preg_replace('/\s+/', ' ', fgets($maclist)));
 					if (strpos($macline,',') !== false) {
-						$smarty->append('maclist',$macline,nocache);
+						$smarty->append('maclist',$macline);
 					}
 	        }
 	        fclose($maclist);

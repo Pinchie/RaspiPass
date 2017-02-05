@@ -7,6 +7,14 @@ $smarty->setCaching(false);
 
 $smarty->assign('title','Administrative Tasks');
 
+// Check for pending reboot - smarty will assign rebootmsg if reboot notification
+// file exists
+	$smarty->clearAssign('rebootmsg');
+	if (file_exists('/var/raspipass/reboot')) {
+		$rebootmsg=file("/var/raspipass/reboot");
+		$smarty->assign('rebootmsg',$rebootmsg[0],true);
+	}
+
 // Load dat template
 $smarty->display('admintasks.tpl');
 ?>

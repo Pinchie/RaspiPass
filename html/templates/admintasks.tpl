@@ -1,7 +1,10 @@
 {include file='header_common.tpl'}
 <table align="center" class="buttontable">
-<tr><th colspan="3">Administrative Tasks</th></tr><tr><td class="buttoncell">
-<form name="start_ap" id="" method="post" action="start_ap.php" target="_parent">
+<tr><th colspan="3">Administrative Tasks</th></tr>
+{if $rebootmsg}
+<tr><td><font color="red"><b>Reboot pending: {$rebootmsg}</b></font></td></tr>
+{/if}
+<tr><td class="buttoncell"><form name="start_ap" id="" method="post" action="start_ap.php" target="_parent">
 <input type="submit" name="submit_button" id="submit_button" value="Start Access Point" />
 </td></form>
 <td class="buttoncell"><form name="reboot_device" id="" method="post" action="reboot.php" target="_parent">
