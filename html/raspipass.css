@@ -75,15 +75,16 @@ table.buttontable td {
 	display: block;	
 }
 
+iframe {
+	border:none;
+}
 iframe.mainbody {
-	border: 2px solid white;
 	outline: none;
 	width: 100%;
 	height: 750px;
 }
 
 iframe.menutable {
-	border: 2px solid red;
 	outline: none;
 	width: 100%;
 	height: 60px;
