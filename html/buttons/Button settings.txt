@@ -1,0 +1,23 @@
+All menu buttons generated from https://dabuttonfactory.com/
+
+------
+TEXT
+Standard font: Gyre Pagella; bold; 18pt; white
+Alert font: Gyre Pagella; bold; 20pt; #f4cccc
+Standard text shadow: True; 1px distance; black
+Alert text shadow : True; 1px distance; red
+------
+SIZE
+fixed; 150x30
+------
+STYLE
+Style: Rounded box
+Corner radius: 5
+Background: Simple gradient
+Top colour: #8396D4
+Standard Bottom colour: #897fab
+Alert bottom colour: #ff0000
+Bubble effect: True
+Border: False
+Shadow: False
+------

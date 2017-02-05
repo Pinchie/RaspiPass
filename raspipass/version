@@ -1,4 +1,4 @@
-0.7.5b
+0.7.5b1
 Implemented Smarty to separate php/html files for easier editing
 Redesigned Web GUI to utilise Smarty, separating elements ino individual files
 Added confirmation of correct MAC addresses when reading into Web GUI - invalid SSID,MAC pairings will not be read
@@ -6,4 +6,5 @@ Replaced text-based menu table with image buttons
 Added reboot-checking for Admin button - text will be red if reboot pending
 Added pending reboot message to Administration page
 Added version output to Web UI homepage
-Made some stylesheet changes & trims
+Made some stylesheet changes & trims (still needs prettification)
+Removed variable caching from certain pages to increase accuracy
