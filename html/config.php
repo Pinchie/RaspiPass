@@ -19,8 +19,11 @@ if (file_exists('/raspipass/config.ini')) {
                fclose($errorlog);
                header('Location: error.php');
 }
+
+// Calculate average runs per hour
 $runsperhour=round(($config_array["runchance"]/100)/($config_array["runinterval"]/60),2);
 $smarty->assign('runsperhour',$runsperhour);
+
 // Load dat template
 $smarty->display('config.tpl');
 ?>
