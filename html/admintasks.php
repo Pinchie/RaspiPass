@@ -12,9 +12,12 @@ $smarty->assign('title','Administrative Tasks');
 	$smarty->clearAssign('rebootmsg');
 	if (file_exists('/var/raspipass/reboot')) {
 		$rebootmsg=file("/var/raspipass/reboot");
-		$smarty->assign('rebootmsg',$rebootmsg[0],true);
 	}
-
+	else {
+		$rebootmsg=0;
+	}
+	$smarty->assign('rebootmsg',$rebootmsg[0],true);
+	
 // Load dat template
 $smarty->display('admintasks.tpl');
 ?>
