@@ -7,6 +7,8 @@ $smarty->setCaching(false);
 
 $smarty->assign('title','Administrative Tasks');
 
+// Call external locale array
+require('scripts/locales.php');
 // Check for pending reboot - smarty will assign rebootmsg if reboot notification
 // file exists
 	$smarty->clearAssign('rebootmsg');

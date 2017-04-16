@@ -7,8 +7,6 @@ $smarty->setCaching(false);
 $smarty->assign('title','Raspipass Config');
 // Call external wifi country/channel arrays
 require('scripts/wificountries.php');
-// Call external locale array
-require('scripts/locales.php');
 
 // Read config array into smarty array without caching
 if (file_exists('/raspipass/config.ini')) {
