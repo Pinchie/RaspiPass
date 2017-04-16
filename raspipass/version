@@ -1,3 +1,6 @@
+0.7.5b2
+Added locale changing - gathers list of available system locales and uses dpg-reconfigure in non-interactive mode to set user choice
+
 0.7.5b1
 Implemented Smarty to separate php/html files for easier editing
 Redesigned Web GUI to utilise Smarty, separating elements ino individual files
