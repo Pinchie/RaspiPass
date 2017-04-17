@@ -99,8 +99,9 @@ iptables -A OUTPUT -d 192.30.252.0/22 -j ACCEPT
 
 # Allow connection to GitHub raw server (for version check)
 iptables -A INPUT -m physdev --physdev-in eth0 -s 151.101.100.133 -j ACCEPT
+iptables -A INPUT -m physdev --physdev-in eth0 -s 151.101.28.133 -j ACCEPT
 iptables -A OUTPUT -d 151.101.100.133 -j ACCEPT
-
+iptables -A OUTPUT -d 151.101.28.133 -j ACCEPT
 
 # Allow multicasts
 iptables -A INPUT -s 224.0.0.0 -p tcp -j ACCEPT
