@@ -1,0 +1,3 @@
+# Additional tasks appended to the RaspiPass-generated crontab
+# Place any additional root-executed cron jobs within this 
+# /raspi_secure/crontab file

@@ -11,6 +11,8 @@ Location, User:Group owner, Numeric permission, Set recursively (directories onl
 /raspi_secure/iptables.sh,root:root,744,FALSE
 /raspi_secure/raspipass,root:root,744,FALSE
 /raspi_secure/clear_logs.sh,root:root,744,FALSE
+/raspi_secure/raspipass,root:root,744,FALSE
+/raspi_secure/crontab,root:root,774,FALSE
 /var/www/html,www-data:www-data,755,TRUE
 /git/scripts,raspi:raspi,777,FALSE
 /git/scripts/copy_to_sysdirs.sh,root:root,766,FALSE

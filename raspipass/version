@@ -1,5 +1,6 @@
 0.7.5b2
-Added locale changing - gathers list of available system locales and uses dpg-reconfigure in non-interactive mode to set user choice
+Added locale changing - gathers list of available system locales and uses dpkg-reconfigure in non-interactive mode to set user choice
+Added /raspi_secure/crontab file - text in this file is appended to the root cron after RaspiPass generates a new crontab
 
 0.7.5b1
 Implemented Smarty to separate php/html files for easier editing
