@@ -71,7 +71,7 @@ then
 	echo Using SSID \"${apsettings[0]}\" and MAC address \"${apsettings[1]}\"
 fi
 
-echo `date +"%a %b %d %r"`
+echo `date +"%a %b %d %r %Z"`
 echo "Starting RaspiPass..."
 
 # Check probability file
