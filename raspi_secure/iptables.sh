@@ -99,16 +99,20 @@ iptables -A OUTPUT -d 192.30.252.0/22 -j ACCEPT
 
 # Allow connection to GitHub raw server (for version check)
 iptables -A INPUT -m physdev --physdev-in eth0 -s 151.101.100.133 -j ACCEPT
+iptables -A INPUT -m physdev --physdev-in eth0 -s 151.101.28.133 -j ACCEPT
 iptables -A OUTPUT -d 151.101.100.133 -j ACCEPT
-
+iptables -A OUTPUT -d 151.101.28.133 -j ACCEPT
 
 # Allow multicasts
-iptables -A INPUT -s 224.0.0.0 -p tcp -j ACCEPT
-iptables -A OUTPUT -d 224.0.0.0 -p tcp -j ACCEPT
-iptables -A FORWARD -d 224.0.0.0 -p tcp -j ACCEPT
-iptables -A FORWARD -s 224.0.0.0 -p tcp -j ACCEPT
+iptables -A INPUT -d 224.0.0.0/8 -j ACCEPT
+iptables -A INPUT -s 224.0.0.0/8 -j ACCEPT
+iptables -A OUTPUT -d 224.0.0.0/8 -j ACCEPT
+iptables -A OUTPUT -s 224.0.0.0/8 -j ACCEPT
+iptables -A FORWARD -d 224.0.0.0/8 -j ACCEPT
+iptables -A FORWARD -s 224.0.0.0/8 -j ACCEPT
 
 # Streetpass relay whitelist	
+iptables -A INPUT -s 52.43.174.40 -j ACCEPT
 iptables -A INPUT -s 104.70.153.178 -j ACCEPT
 iptables -A INPUT -s 104.74.48.110 -j ACCEPT
 iptables -A INPUT -s 23.7.18.146 -j ACCEPT
@@ -121,6 +125,9 @@ iptables -A INPUT -s 54.218.98.74 -j ACCEPT
 iptables -A INPUT -s 54.218.99.79 -j ACCEPT
 iptables -A INPUT -s 54.244.22.201 -j ACCEPT
 iptables -A INPUT -s 69.25.139.140 -j ACCEPT
+iptables -A INPUT -s 192.195.204.216 -j ACCEPT
+iptables -A INPUT -s 52.10.249.207 -j ACCEPT
+iptables -A OUTPUT -d 52.43.174.40 -j ACCEPT
 iptables -A OUTPUT -d 104.70.153.178 -j ACCEPT
 iptables -A OUTPUT -d 104.74.48.110 -j ACCEPT
 iptables -A OUTPUT -d 23.7.18.146 -j ACCEPT
@@ -133,6 +140,9 @@ iptables -A OUTPUT -d 54.218.98.74 -j ACCEPT
 iptables -A OUTPUT -d 54.218.99.79 -j ACCEPT
 iptables -A OUTPUT -d 54.244.22.201 -j ACCEPT
 iptables -A OUTPUT -d 69.25.139.140 -j ACCEPT
+iptables -A OUTPUT -d 192.195.204.216 -j ACCEPT
+iptables -A OUTPUT -d 52.10.249.207 -j ACCEPT
+iptables -A FORWARD -d 52.43.174.40 -j ACCEPT
 iptables -A FORWARD -d 104.70.153.178 -j ACCEPT
 iptables -A FORWARD -d 104.74.48.110 -j ACCEPT
 iptables -A FORWARD -d 23.7.18.146 -j ACCEPT
@@ -145,6 +155,9 @@ iptables -A FORWARD -d 54.218.98.74 -j ACCEPT
 iptables -A FORWARD -d 54.218.99.79 -j ACCEPT
 iptables -A FORWARD -d 54.244.22.201 -j ACCEPT
 iptables -A FORWARD -d 69.25.139.140 -j ACCEPT
+iptables -A FORWARD -d 192.195.204.216 -j ACCEPT
+iptables -A FORWARD -d 52.10.249.207 -j ACCEPT
+iptables -A FORWARD -s 52.43.174.40 -j ACCEPT
 iptables -A FORWARD -s 104.70.153.178 -j ACCEPT
 iptables -A FORWARD -s 104.74.48.110 -j ACCEPT
 iptables -A FORWARD -s 23.7.18.146 -j ACCEPT
@@ -157,6 +170,8 @@ iptables -A FORWARD -s 54.218.98.74 -j ACCEPT
 iptables -A FORWARD -s 54.218.99.79 -j ACCEPT
 iptables -A FORWARD -s 54.244.22.201 -j ACCEPT
 iptables -A FORWARD -s 69.25.139.140 -j ACCEPT
+iptables -A FORWARD -s 192.195.204.216 -j ACCEPT
+iptables -A FORWARD -s 52.10.249.207 -j ACCEPT
 
 # Set up log for non-matching patckets
 iptables -N LOGGING
@@ -169,7 +184,7 @@ iptables -A OUTPUT -j LOGGING
 iptables -A FORWARD -j LOGGING
 
 # Set logging options - non-WLAN disabled due to oversized logs. Uncomment to log dropped packet info.
-#iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
+iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
 iptables -A WLAN_LOGGING -m limit --limit 10/min -j LOG --log-prefix "Dropped incoming wlan packet: " --log-level 4
 
 # Drop 'em
