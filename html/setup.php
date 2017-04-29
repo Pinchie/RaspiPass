@@ -18,7 +18,7 @@ class Smarty_Main extends Smarty {
 //        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
 	$this->caching = 0;
         $this->assign('app_name', 'RaspiPass');
-	$this->debugging = true;
+//	$this->debugging = true;
 
    }
 
