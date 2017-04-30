@@ -184,7 +184,7 @@ iptables -A OUTPUT -j LOGGING
 iptables -A FORWARD -j LOGGING
 
 # Set logging options - non-WLAN disabled due to oversized logs. Uncomment to log dropped packet info.
-#iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
+# iptables -A LOGGING -m limit --limit 20/min -j LOG --log-prefix "Dropped packet: " --log-level 4
 iptables -A WLAN_LOGGING -m limit --limit 10/min -j LOG --log-prefix "Dropped incoming wlan packet: " --log-level 4
 
 # Drop 'em
