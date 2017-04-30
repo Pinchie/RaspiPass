@@ -34,7 +34,7 @@ then
         exit 0
 fi
 
-echo Clearing logs: dmesg, syslog, kernel, apache2, hostapd, rotated, login history logs...
+echo Clearing logs: dmesg, syslog, kernel, apache2, hostapd, rotated, login history, command history logs...
 dmesg -C
 echo > /var/log/syslog
 echo > /var/log/kern.log
@@ -47,5 +47,6 @@ echo > /var/raspipass/hostapd
 echo > /var/log/wtmp
 echo > /var/log/btmp
 echo > /var/log/lastlog
+echo > /home/raspi/.bash_history
 echo Done.
 
